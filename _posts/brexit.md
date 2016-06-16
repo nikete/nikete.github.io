@@ -1,4 +1,5 @@
 
+(inspired by https://twitter.com/edmundedgar/status/743396512244203520 ) 
 
 Consider the Brexit binary betting markets denominated USD and GBP respectively, with an asset that pays 1 if brexit vote is yes, assume the price of this in their respective currency is 0.4
 
