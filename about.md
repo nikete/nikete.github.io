@@ -4,7 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Over six months ago I submitted my [PhD thesis](https://github.com/nikete/thesis). 
+I am currently writting up the corrections to my [PhD thesis](https://github.com/nikete/thesis). 
+
+I try to work for the improvement of understanding. 
 
 Google scholar has a [good first approximation to my academic output](https://scholar.google.it/citations?hl=en&user=_2Z3DcoAAAAJ&view_op=list_works&sortby=pubdate)
 
