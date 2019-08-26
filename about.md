@@ -13,10 +13,9 @@ My current applied focus is on medicine. How can we design better ways of evalua
 While the ICU is my current "model institution", but I have also studied various markets (betting, cryptocurrencies, internet advertising) and non-market institutions (various comunes and collectives).
 I would love to do some experiments about collecticve cognition  around [nutrition](https://meaningness.com/nutrition).
 
-I wrote a [PhD thesis](https://github.com/nikete/thesis), on algoirthms and mechanisms for aiding decision making designed to preserve subjects freedom of choice. There are two main results in it: 1) when you are learning from the rewards received in a bandit setting and the action that is taken is not the one the algorithm chose, by paying attention to both there are situations where you can do arbitrarily better with only a multiplicative worst case cost. 2) When you are getting advice to inform a decision that you want to mantain ultimate control over, allowing the advice givers to self select so one of them receives all information and "owns" the advice can do much better than trying to use "prediction market" mechanisms directly.
-
 Google scholar has a [good first approximation to my academic output.](https://scholar.google.it/citations?hl=en&user=_2Z3DcoAAAAJ&view_op=list_works&sortby=pubdate)
 
+I wrote a [PhD thesis](https://github.com/nikete/thesis), on algoirthms and mechanisms for aiding decision making designed to preserve subjects freedom of choice. There are two main results in it: 1) when you are learning from the rewards received in a bandit setting and the action that is taken is not the one the algorithm chose, by paying attention to both there are situations where you can do arbitrarily better with only a multiplicative worst case cost. 2) When you are getting advice to inform a decision that you want to mantain ultimate control over, allowing the advice givers to self select so one of them receives all information and "owns" the advice can do much better than trying to use "prediction market" mechanisms directly.
 
 
 ### Contact me
