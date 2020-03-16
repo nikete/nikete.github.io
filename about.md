@@ -9,9 +9,7 @@ I go by nikete in everything but the most formal of documents.
 Broadly, I am motivated to work towards [the improvement of the understanding](http://bactra.org/Spinoza/TIE/). By desining, building and understanding the computational engines that mediate collective cognition. Methodologically my tools come mostly from economics and machine learning. I enjoy theory driven work and oportunistic experimentation. 
 I run a small consultancy, Amurado Research OU, focused on commercial applications of machine learning and economics. I am also a research affiliate of the Laboratory for Computational Physiology at MIT, where I try to design better algorithms and mechanisms for finding which treatments to use in the Intensive Care Unit.
 
-My current applied focus is on medicine. How can we design better ways of evaluating proposed policies given the existing observational data? I believe that the current way Reinforcement Learning algorithms in medicine are evaluated does not lead to a collective acumulation of knowledge about what effective policies are. I am trying to find better ways.
-While the ICU is my current "model institution", but I have also studied various markets (betting, cryptocurrencies, internet advertising) and non-market institutions (various comunes and collectives).
-I would love to do some experiments about collecticve cognition  around [nutrition](https://meaningness.com/nutrition).
+My current applied focus is on medicine, and in particular improving cognition around the ongoing covid-19 pandemic. On a longer term, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? While the ICU is my current "model institution", but I have also studied various markets (betting, cryptocurrencies, internet advertising) and non-market institutions (various comunes and collectives).
 
 Google scholar has a [good first approximation to my academic output.](https://scholar.google.it/citations?hl=en&user=_2Z3DcoAAAAJ&view_op=list_works&sortby=pubdate)
 
