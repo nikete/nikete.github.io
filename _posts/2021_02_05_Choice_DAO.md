@@ -1,3 +1,9 @@
+---
+layout: post
+title: Choice DAO
+---
+
+
 A design principle in organizational design is: vote on values, bet on beliefs.
 How to structure bets about future events that are publically observable is extremey well understood, and practical protocols exist to do this in a fairly trustless and decentralized way.
 How to structure bets about which course of action will lead to the highest payoff is much less clear, even with a trusted center. (see: https://www.cs.cmu.edu/~sandholm/decision%20rules%20and%20decision%20markets.AAMAS10.pdf )
