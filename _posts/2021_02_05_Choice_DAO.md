@@ -14,4 +14,4 @@ A experiment has started, to do a series of readings, conversatios and writting 
 
 https://app.daohaus.club/dao/0xff3e5cf4cbc602098ab4f734a69f4b365f589569
 
-Get in touch if youd like to join. Our first task is a discusion of the Othman and Sandholm mentioned above.
+Get in touch if youd like to join..
