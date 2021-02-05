@@ -7,7 +7,7 @@ permalink: /about/
 I go by nikete in everything but the most formal of documents.
 
 Broadly, I am motivated to work towards [the improvement of the understanding](http://bactra.org/Spinoza/TIE/). By desining, building and understanding the computational engines that mediate collective cognition. Methodologically my tools come mostly from economics and machine learning. I enjoy theory driven work and oportunistic experimentation. 
-I run a small consultancy, Amurado Research OU, focused on commercial applications of machine learning and economics. I am also a research affiliate of the Laboratory for Computational Physiology at MIT, where I try to design better algorithms and mechanisms for finding which treatments to use in the Intensive Care Unit.
+I run a small consultancy, Amurado Research OU, focused on commercial applications of machine learning and economics. I am also a research affiliate of the Laboratory for Computational Physiology at MIT, where I try to help find which treatments to use in the Intensive Care Unit.
 
 My current applied focus is on biomedicine and what new forms of colectivo cognition around how it is produced can provide. On a broad sense, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? While the ICU is my current "model institution", but I have also studied various markets (betting, cryptocurrencies, internet advertising) and non-market institutions (various comunes and collectives).
 
