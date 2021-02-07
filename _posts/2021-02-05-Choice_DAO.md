@@ -19,4 +19,4 @@ Structured as bootstraping experiment, to iterate on what choices the DAO itself
 
 <https://app.daohaus.club/dao/0xff3e5cf4cbc602098ab4f734a69f4b365f589569>
 
-A proposal for an initial task, the DAO could create a ERC777 and become a liquidity provider for it and the pairs the memebers of the DAO decide to fund in the exchanges and AMMs the DAO decides, with the choice of liquidity provision schedule to be made using a incentive compatible. The deicsions themselves made also using the mechanism.
+A proposal for an initial task, the DAO could create a ERC777 and become a liquidity provider for it and the pairs the members of the DAO decide to fund in the exchanges and AMMs the DAO decides, with the choice of liquidity provision schedule to be made using a incentive compatible. The deicsions themselves made also using the mechanism.
