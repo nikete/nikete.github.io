@@ -15,7 +15,7 @@ How to structure bets about which course of action will lead to the highest payo
 
 The explosion in smart contracts around DeFi largely relies on fixed parameters that are updated infrequently by stakeholder votes. Many of these parameters are not values that the protocol is upholding, but rather tactical choices informed by beliefs about their impacts. A marketplace to make these choices in the interest of the values expressed by stakers in the contract is a natural primitive. 
 
-Vote on the objective function, bet on which choice of parameters optimizes it. 
+Vote on the objective function, bet on which choice of parameters optimizes it.
 
 I have started a small experiment, to bootstrap a sequence of decision procedures, that iterate on what choices the DAO itself makes in researching and developing open protocols for eliciting what choices to take.
 
