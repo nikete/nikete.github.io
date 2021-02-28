@@ -6,10 +6,10 @@ permalink: /about/
 
 I go by nikete in everything but the most formal of documents.
 
-Broadly, I am motivated to work towards [the improvement of the understanding](http://bactra.org/Spinoza/TIE/). By desining, building and understanding the computational engines that mediate collective cognition. Methodologically my tools come mostly from economics and machine learning. I enjoy theory driven work and oportunistic experimentation. 
-I run a small consultancy, Amurado Research OU, focused on commercial applications of machine learning and economics. I am also a research affiliate of the Laboratory for Computational Physiology at MIT, where I try to help find which treatments to use in the Intensive Care Unit.
 
-My current applied focus is on biomedicine and what new forms of colectivo cognition around how it is produced can provide. On a broad sense, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? While the ICU is my current "model institution", but I have also studied various markets (betting, cryptocurrencies, internet advertising) and non-market institutions (various comunes and collectives).
+Broadly, I am motivated to work towards [the improvement of the understanding](http://bactra.org/Spinoza/TIE/) by designing, building and understanding the computational engines that mediate collective cognition. Methodologically my tools come mostly from economics and machine learning. I enjoy theory- driven work and opportunistic experimentation. I run a small consultancy, Amurado Research OU, focused on commercial applications of machine learning and economics. I am also a Research Affiliate of the Laboratory for Computational Physiology at MIT, where I find treatments to use in Intensive Care Units.
+My current applied focus is on biomedicine and what new forms of collective cognition its production can provide. In a broad sense, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? While the ICU is my current “model institution,” I have also studied various markets (betting, cryptocurrencies, Internet advertising) and non-market institutions (various communes and collectives).
+
 
 Google scholar has a [good first approximation to my academic output.](https://scholar.google.it/citations?hl=en&user=_2Z3DcoAAAAJ&view_op=list_works&sortby=pubdate)
 
