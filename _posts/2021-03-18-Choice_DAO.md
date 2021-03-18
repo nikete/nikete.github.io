@@ -27,4 +27,4 @@ Some of the initial choices the DAO faces are around how to leverage the differe
 * What is the role of meta-questions as in bayesian truth serum and related mechanisms?
 
 
-If you have any advice let me know.
+I believe that this would be the first time a decision market is used outside a laboratory experiment. If you have any advice to help make it real, let me know.
