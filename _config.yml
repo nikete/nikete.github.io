@@ -14,6 +14,7 @@ avatar: https://en.gravatar.com/userimage/1131759/5635c8813b170322c65980a1a9d108
 #
 # Flags below are optional
 #
+permalink: /:title/
 
 # Includes an icon in the footer for each username you enter
 footer-links:
