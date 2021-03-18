@@ -16,4 +16,4 @@ In the spirit of [Constructive Economics](https://web.archive.org/web/2016122915
 
 The goal is to experiment with what applications (beyond DAO governance) are well suited to these mechanisms, how the mechanisms need to be refined, and what is needed to make this happen. I do not expect the application areas to be limited to smart contracts. 
 
-To start things off a pair of Moloch DAOs to coordinate payments for capital (on mainnet and xdai) and work (on xdai), and control the smart contracts have been created. An initial implementation in solidity of an advice auction has been written, and a token to be issued to recognize contributions to the DAO issued. 
+If this sounds interesting, get in touch!
