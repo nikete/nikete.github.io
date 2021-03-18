@@ -1,6 +1,7 @@
 ---
 layout: post
 title: CHOICE: Protocols for good advice
+permalink: /:Choice_DAO/
 ---
 
 How to set up good incentives for information that guides choosing the best action is a crucial challenge for collective cognition. It has received mostly scholarly attention on the literature around _Decision Markets_. Decision markets  seek to both predict and decide the future. They differ from more traditional markets such as betting (“prediction markets”) in that they seek to influence the object of their attention instead of merely being influenced by it. 
