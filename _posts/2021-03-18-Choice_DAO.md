@@ -14,7 +14,11 @@ Recently [Osterheld and Conitzer](https://users.cs.duke.edu/~conitzer/decisionWI
 
 In the spirit of [Constructive Economics](https://web.archive.org/web/20161229154937/http://aiecon.tumblr.com/post/489827144/what-is-constructive-economics) the focus is on making it real. Smart contracts running on proof-of-stake blockchains provide a playground for experimenting with novel economic structures. A self-referential experiment in computational social science: a DAO run by, and dedicated to the development of, practical designs for incentivizing advice that leads to better choices. The DAO itself making decisions using the proposed mechanisms. 
 
-The goal is to experiment with what applications (beyond DAO governance) are well suited to these mechanisms, how the mechanisms need to be refined, and what is needed to make this happen.  
+The goal is to experiment with what applications (beyond DAO governance) are well suited to these mechanisms, how the mechanisms need to be refined, and what is needed to make this happen.  Potential applications:
+
+* choosing profit maximizing bid-ask spreads for automated market makers.
+* choosing suppliers when quality is hard to observe ex-ante but affects an ex-post observable reward
+* choosing what to learn to maximize market income in some future period
 
 After some conversations about advice auctions and related work on decision elicitation, at the [DIMACS Workshop on Forecasting: From Forecasts to Decisions](http://dimacs.rutgers.edu/events/details?eID=1864) there seems to be enough interest to start a DAO around research and experimentation on advice and policy elicitation. The best advice for a DAO is the analysis of a proposed mechanism and the code that implmenets it. So the messages for the winning bids as the DAO bootstraps itself by running an advice auction over what mechanism to use (with the default by the advice auction as currently implemented in solidity).
 
@@ -25,6 +29,9 @@ Some of the initial choices the DAO faces are around how to leverage the differe
 * How can the share of the reward that is auctioned off be set? The basic tradeoff is that making the share close to 1 reduces the downside risk at the cost of also reducing the upside for the decision maker. Higher values also make the capital requirements for participation, effectively limiting competition between  advice providers. 
 
 * What is the role of meta-questions as in bayesian truth serum and related mechanisms?
+
+* Would giving away a token to particularly skilled groups of potential advisors (say for example high scoring users in forecast competition sites)? Should it be possible to cash them out after some amount of trading only (so they are not fungible until they have acumulated some history and then they cna be transformed into the standard fungible version). 
+
 
 
 I believe that this would be the first time a decision market is used outside a laboratory experiment. If you have any advice to help make it real, let me know.
