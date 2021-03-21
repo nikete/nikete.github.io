@@ -17,7 +17,7 @@ In the spirit of [Constructive Economics](https://web.archive.org/web/2016122915
 The goal is to experiment with what applications (beyond DAO governance) are well suited to these mechanisms, how the mechanisms need to be refined, and what is needed to make this happen.  Potential applications:
 
 * choosing if a seed stage fundaraising team/project should be funded
-* choosing profit maximizing bid-ask spreads for automated market makers.
+* choosing profit maximizing bid-ask spreads for automated market makers, more broadly choosing parameters of control systems in governance minimized systems.
 * choosing suppliers when quality is hard to observe ex-ante but affects an ex-post observable reward
 * choosing what to learn to maximize market income in some future period
 
