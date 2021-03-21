@@ -21,7 +21,7 @@ The goal is to experiment with what applications (beyond DAO governance) are wel
 * choosing suppliers when quality is hard to observe ex-ante but affects an ex-post observable reward
 * choosing what to learn to maximize market income in some future period
 
-After some conversations about advice auctions and related work on decision elicitation, at the [DIMACS Workshop on Forecasting: From Forecasts to Decisions](http://dimacs.rutgers.edu/events/details?eID=1864) there seems to be enough interest to start a DAO around research and experimentation on advice and policy elicitation. The best advice for a DAO is the analysis of a proposed mechanism and the code that implmenets it. So the messages for the winning bids as the DAO bootstraps itself by running an advice auction over what mechanism to use (with the default by the advice auction as currently implemented in solidity).
+After some conversations about advice auctions and related work on decision elicitation, at the [DIMACS Workshop on Forecasting: From Forecasts to Decisions](http://dimacs.rutgers.edu/events/details?eID=1873) there seems to be enough interest to start a DAO around research and experimentation on advice and policy elicitation. The best advice for a DAO is the analysis of a proposed mechanism and the code that implmenets it. So the messages for the winning bids as the DAO bootstraps itself by running an advice auction over what mechanism to use (with the default by the advice auction as currently implemented in solidity).
 
 Some of the initial choices the DAO faces are around how to leverage the different parts of the literature on elicitation:
 
