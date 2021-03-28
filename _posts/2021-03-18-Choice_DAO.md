@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  A Protocol for good advice
+title:  A Protocol for good choices 🧠 
 permalink: Choice_DAO
 ---
 
