@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Differentiable Economics Crypto Field Experiments
-permalink: Choice_Research
+permalink: Differentiable_Economics
 ---
 
 One of the most exciting lines of work for me is towards automating mechanism design, sprouting from http://proceedings.mlr.press/v97/duetting19a.html
