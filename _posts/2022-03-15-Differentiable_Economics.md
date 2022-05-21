@@ -16,7 +16,7 @@ Daniel Reusche and I wrote up [a short note](https://arxiv.org/abs/2104.00159) o
 Daniel and Michael Curry also have a interesting  blog post describing [a GAN based approach](https://iclr-blog-track.github.io/2022/03/25/two-player-auction-learning/) to mechanism learning.
 
 I am very keen in bringing this to the attention of the ethereum and those exploring novel public good funding mechanisms.
-Those interested in exploring potential field experiments that can take place, where the computational contract (perhaps on zkEVM or some kind of MPC) learns the incentives it can provide to maximize notions of social welfare.
+Those interested in exploring potential field experiments that can take place, where the computational contract (perhaps on the [zkEVM alpha](https://v2-docs.zksync.io/dev/)) learns the incentives it can provide to maximize notions of social welfare or profit.
 
 
 Using regret minimization for aproximately truthful mechanism design was used in 
