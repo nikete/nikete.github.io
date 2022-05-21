@@ -4,6 +4,9 @@ title:  Differentiable Economics Crypto Field Experiments
 permalink: Differentiable_Economics
 ---
 
+What is the revenue optimal selling mechanism for two agents with i.i.d. uniform valuations over two items?
+
+Mechanism design is very hard. 
 One of the most exciting lines of work for me is towards [automating mechanism design via deep learning](http://proceedings.mlr.press/v97/duetting19a.html), [sprouting from this](https://scholar.google.com/scholar?cites=5937791241364902632&as_sdt=2005&sciodt=0,5&hl=en&scioq=regretnet). There is a very compeling talk by David Parkes on this line of work:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pXz4K7fafes" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
