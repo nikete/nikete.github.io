@@ -1,4 +1,10 @@
-# Running notes: market structures for prompt engineering services
+---
+layout: post
+title:  Rough notes on Market Structure Of Prompt eengineering
+permalink: market_structure_prompt_engineering
+---
+
+
 
 attention conservation notice: incredibly rough scratchpad of ideas
 
@@ -15,3 +21,5 @@ A market structure for improvements to the interface between models and the worl
 How to compose prompts? Are the useful meta prompts? How stable are prompts accross models? what does that correlate to?
 
 What market structures are expressive enough? can be understood? can be incnetive compatible?
+
+
