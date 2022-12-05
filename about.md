@@ -4,12 +4,14 @@ title: About
 permalink: /about/
 ---
 
+
+Currently, I mostly think about what shape institutions for global co-creation of knowledge should take. I am always very happy to hear from potential collaborators, specially those with very different skillsets. 
+
 I go by nikete in everything but the most formal of documents.
 
 
 Broadly, I am motivated to work towards [the improvement of the understanding](http://bactra.org/Spinoza/TIE/). Designing, building and understanding the computational engines that mediate collective cognition. Methodologically my tools come mostly from economics and machine learning. I enjoy theory-driven work and opportunistic experimentation.
-In a broad sense, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? Beyond the ICU, I have also studied various markets (betting, cryptocurrencies, Internet advertising) and related institutions.
-
+In a broad sense, I care about: How can we design better ways of evaluating proposed policies given the existing observational data? Beyond the ICU, I have also studied and helped in building various markets (social media, pharmaceiuticals, sports betting, cryptocurrencies, advertising, music) and related institutions.
 
 I have co-authored articles in machine learning conferences (NIPS, WWW, UAI, IJCAI) and  medical journals (Critical Care Medicine, Chest, Journal of Clinical Sleep Medicine). Google scholar has a [good first approximation to my more academic output.](https://scholar.google.it/citations?hl=en&user=_2Z3DcoAAAAJ&view_op=list_works&sortby=pubdate)
 
