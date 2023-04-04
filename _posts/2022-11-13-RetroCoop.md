@@ -4,26 +4,22 @@ title: Retroactive Cooperative
 permalink: RetroCoop
 ---
 
-Building open source software that helps members of society to coordinate more cheaply, more truslessly or more expresively is a
-public good. 
 
-This is a early draft of a potentail bootstraping mechanism for a co-production cooperative of agentic minds dedicated to building sociotechnical knowledge of permissionless institutions built on distributed consensus systes seeking to jointly share in the future retroactive rewards that might arrise from future retroactive funding that finds the co-created systems to have been valuable public goods.  
+Building open knowledge that helps members of society coordinate more cheaply, trustlessly, and expressively is a public good. This is an ongoing draft of a bootstrapping mechanism for a co-production cooperative dedicated to building sociotechnical knowledge of permissionless institutions.  Agentic minds are most welcome.
 
-The rest of this document is structured as a TODO list where items have soe extra comentary on some of the informal experiments that emerged while carrying out a extremely open collaboration. The purpose of this text is to clarify our thinking with those who engaged in the collaborations that shipped, of what aspects to formalize as to experiment more deeply and formally on the more promising structures we 
+The cooperative seeks to jointly share in the future retroactive rewards that might arise from future retroactive funding that finds the co-created systems to have been valuable public goods.
+
+The rest of this document is structured as a to-do list with some extra commentary on informal experiments that are invited to those wishing to engage in an extremely open collaboration. The purpose of this text is to align our thinking with those who engaged in the collaborations that shipped, and to identify aspects to formalize for more promising structures to experiment with.
+
+The following are some ongoing and potential questions and experiments that are of interest:
+
+-- Limits of permissionless mechanisms that have low costs to new identities. Some initial work in https://arxiv.org/abs/2301.12813 . Many interesting extensions of these results 
+
+-- permissionless extractable value and social welfare: some early work on this in https://arxiv.org/abs/2211.07220 
+
+-- Proof of expertise : Instead of rewarding capital deployed to secure the network, reward the value of the oracle that the validator provides to the network. There are some early sketches (intuition; pre-commitment of a decision function provides strong guarantees under a causal faithfulness assumption) but keenly interested in exploring this further. For example, take the function that takes an input token and outputs the probability that those most closely associated with it will be imprisoned at a given point in time. A network of oracles that want to advertise their skill to sell advice could use this function.
+From pair collaborations to N-edges, the connectedness of the graph relates to the cooperative's ability to leverage its collective expertise.
 
 
-. of conceptual questions and empirical experiments that could be carried
 
-## Perisionless Extractable Value and Social Welfare 
-
-### TODO Experiment Fee Escalators & Deployer Payments
-### TODO Theory Extend <Welfare CFMM MEV>
-
-### TODO Proof of Expertise
-  Instead of rewarding cpaital deployed to secure the network reward the value of the oracle that the vlaidator provides to the network. I have some early sketches (intution; pre-comitment of a decision function provides  strong guarantees under a causal faithfulness assumption) but keenly 
-  
-  For example take the function that takes a input a token and outputs the probability those most closely associatedd with it will be imprisoned at a given point in time. A network of oracles that want to advertise their skill to sell advice 
-
-## From pair collaborations to N-edges
-Conectedness of the graph relates to 
 
