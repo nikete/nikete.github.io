@@ -5,7 +5,8 @@ permalink: /about/
 ---
 
 
-Currently, I mostly think about what shape institutions for global co-creation of knowledge should take. I am always very happy to hear from potential collaborators, specially those with very different skillsets. Im most actively working on market structure for the permissionless collaborative use and fine tunning of large language models.
+Currently, I work at [GroupLang](https://grouplang.com/), studying how LLMs interacting with a group, impact incentives. We are hiring, and are remote first. 
+
 
 I go by nikete in everything but the most formal of documents.
 
