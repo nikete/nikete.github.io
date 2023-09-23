@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 
-Currently, I work at [GroupLang](https://grouplang.com/), studying how LLMs interacting with a group, impact incentives. We are hiring, and are remote first. 
+Currently, I work at [GroupLang](https://grouplang.com/). We study how LLMs interacting with a group impact incentives. We are hiring, and are remote first. 
 
 
 I go by nikete in everything but the most formal of documents.
