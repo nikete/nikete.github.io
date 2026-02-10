@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Uncle Scrooge quote card</title>
+  <desc id="desc">A text-only quote card reading: I made it by being tougher than the toughies and smarter than the smarties! And I made it square!</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffdf7" />
+      <stop offset="100%" stop-color="#f2efe6" />
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="675" fill="url(#bg)" />
+  <rect x="48" y="48" width="1104" height="579" rx="24" fill="#ffffff" stroke="#111111" stroke-width="4" />
+
+  <text x="100" y="175" font-family="Georgia, serif" font-size="56" fill="#111111">
+    <tspan x="100" dy="0">“I made it by being tougher than the toughies</tspan>
+    <tspan x="100" dy="72">and smarter than the smarties!</tspan>
+    <tspan x="100" dy="72">And I made it square!”</tspan>
+  </text>
+
+  <text x="100" y="565" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#333333">
+    <tspan>Uncle Scrooge (Carl Barks, “Only a Poor Old Man”, Four Color #386, 1952)</tspan>
+  </text>
+</svg>

@@ -18,5 +18,5 @@ Core recommendations include signer-conditioned commission, first-inclusion mine
 
 ### Documents
 
-- Main audit report: [PDF](http://nikete.com/crosslink_zebra_audit.pdf) \| [TeX](http://nikete.com/crosslink_zebra_audit.tex)
-- Formal proofs companion: [PDF](http://nikete.com/crosslink_zebra_audit_proofs.pdf) \| [TeX](http://nikete.com/crosslink_zebra_audit_proofs.tex)
+- Main audit report: [PDF](/audits/zcash/crosslink_zebra_audit.pdf) \| [TeX](/audits/zcash/crosslink_zebra_audit.tex)
+- Formal proofs companion: [PDF](/audits/zcash/crosslink_zebra_audit_proofs.pdf) \| [TeX](/audits/zcash/crosslink_zebra_audit_proofs.tex)
