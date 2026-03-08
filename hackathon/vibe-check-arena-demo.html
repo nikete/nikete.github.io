@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vibe Check Arena</title>
+<style>
+:root {
+  --bg: #f4efe7;
+  --panel: rgba(255, 251, 244, 0.94);
+  --panel-strong: #fffdf8;
+  --ink: #122033;
+  --muted: #6c6a66;
+  --line: rgba(18, 32, 51, 0.12);
+  --teal: #0f766e;
+  --blue: #2563eb;
+  --orange: #dd6b20;
+  --rust: #b4533f;
+  --gold: #b88a14;
+  --plum: #7c3f8c;
+  --shadow: 0 18px 40px rgba(18, 32, 51, 0.10);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.10), transparent 30%),
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.10), transparent 24%),
+    linear-gradient(180deg, #f7f2ea 0%, #efe7da 100%);
+}
+
+a {
+  color: inherit;
+}
+
+.shell {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.hero {
+  padding: 28px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -36px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(221, 107, 32, 0.18), transparent 68%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  gap: 22px;
+  align-items: start;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  margin-top: 12px;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.94;
+}
+
+.lead {
+  max-width: 44rem;
+  margin: 14px 0 0;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.16s ease, opacity 0.16s ease, background 0.16s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--ink), #1f4d66);
+  color: #fff;
+}
+
+.secondary {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--ink);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(18, 32, 51, 0.16);
+}
+
+.hero-side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mini {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.mini span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.mini strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.mini small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 12px;
+}
+
+.hero-bottom {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.claim {
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(18, 32, 51, 0.96), rgba(15, 118, 110, 0.88));
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.metric small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.controls {
+  position: sticky;
+  top: 18px;
+  padding: 20px;
+  align-self: start;
+}
+
+.controls h2 {
+  font-size: 28px;
+}
+
+.controls-intro {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.control-group + .control-group {
+  margin-top: 16px;
+}
+
+.control-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.control-help {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+select,
+input[type="range"] {
+  width: 100%;
+}
+
+select {
+  appearance: none;
+  border-radius: 12px;
+  border: 1px solid rgba(18, 32, 51, 0.16);
+  background: #fff;
+  color: var(--ink);
+  padding: 11px 12px;
+  font-size: 14px;
+}
+
+input[type="range"] {
+  accent-color: var(--blue);
+}
+
+.range-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.controls-note {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dashboard {
+  min-width: 0;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.section-head p {
+  margin: 0;
+  max-width: 52rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  padding: 18px;
+  min-width: 0;
+}
+
+.tag {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.viz {
+  margin-top: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(18, 32, 51, 0.06);
+  background: #fcfbf8;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.callout {
+  margin-top: 12px;
+  padding: 12px 13px;
+  border-radius: 14px;
+  background: rgba(18, 32, 51, 0.035);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.callout b {
+  color: var(--ink);
+}
+
+.memo-card {
+  grid-column: span 2;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(252, 247, 239, 0.92));
+}
+
+.memo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.memo-box {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.memo-label {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.memo-text {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+.bullet-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.why {
+  margin-top: 22px;
+  padding: 24px;
+}
+
+.why-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.why-card {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.why-card h3 {
+  font-size: 18px;
+}
+
+.why-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.footer {
+  margin: 16px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.rise {
+  animation: rise 0.45s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1150px) {
+  .hero-grid,
+  .hero-bottom,
+  .main-grid,
+  .memo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    position: relative;
+    top: auto;
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .memo-card {
+    grid-column: auto;
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .shell {
+    padding: 16px;
+  }
+
+  .hero,
+  .controls,
+  .card,
+  .memo-card,
+  .why {
+    padding: 18px;
+  }
+
+  .hero-side,
+  .metric-strip,
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="panel hero rise">
+    <div class="eyebrow">Hackathon demo for trustworthy multi-agent AI</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Vibe Check Arena</h1>
+        <p class="lead">A live interface for the settlement layer: public constitutions, influence-free scoring, sparse audits, and credit for complementary evidence. The push is not another agent wrapper, but a candidate coordination primitive for evaluating multi-agent systems under adversarial pressure.</p>
+        <div class="button-row">
+          <button class="primary" id="tourBtn">Play guided 90s tour</button>
+          <button class="secondary" id="resetBtn">Reset defaults</button>
+          <button class="ghost" id="copyPitchBtn">Copy one-line pitch</button>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="mini">
+          <span>Current scenario</span>
+          <strong id="heroScenario">Drone procurement</strong>
+          <small id="heroScenarioNote">Cyber-physical coordination, not a toy chat task.</small>
+        </div>
+        <div class="mini">
+          <span>Current output</span>
+          <strong id="heroOutput">Linked</strong>
+          <small>Readable outputs should stay tied to the settled record.</small>
+        </div>
+        <div class="mini">
+          <span>Constitution</span>
+          <strong id="heroConstitution">Safety-first</strong>
+          <small>Public rules decide what the system is allowed to optimize.</small>
+        </div>
+        <div class="mini">
+          <span>Core claim</span>
+          <strong>Trust = settlement</strong>
+          <small>Not a vibes score, not a post-hoc explanation layer.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="claim">If you only remember one sentence, remember this: trust is a public settlement rule, not a confidence score.</div>
+      <div class="metric-strip">
+        <div class="metric">
+          <span>Safety mass</span>
+          <strong id="statSafety">76.5%</strong>
+          <small>How much settlement attention goes to safety clauses.</small>
+        </div>
+        <div class="metric">
+          <span>Truthful margin</span>
+          <strong id="statMargin">0.210</strong>
+          <small>How much honesty beats manipulation at the current leakage.</small>
+        </div>
+        <div class="metric">
+          <span>Regret</span>
+          <strong id="statRegret">1.190</strong>
+          <small>Representative regret under the current audit rate.</small>
+        </div>
+        <div class="metric">
+          <span>Output fidelity</span>
+          <strong id="statFaithfulness">0.991</strong>
+          <small>Agreement when the readable output stays linked to settlement.</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-grid">
+    <aside class="panel controls rise">
+      <h2>Controls</h2>
+      <p class="controls-intro">The point is not to hide failure modes. It is to let you trigger them on purpose and watch the settlement layer respond.</p>
+
+      <div class="control-group">
+        <div class="control-label"><span>Scenario</span><span id="scenarioLabel">Drone-swarm procurement</span></div>
+        <div class="control-help">Same mechanism, different story around it.</div>
+        <select id="scenarioSelect">
+          <option value="procurement">Drone-swarm procurement</option>
+          <option value="manufacturing">Collaborative manufacturing</option>
+          <option value="disaster">Disaster response</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"><span>Constitution preset</span><span id="constitutionLabel">Safety-first</span></div>
+        <div class="control-help">What the settlement rule chooses to care about.</div>
+        <select id="constitutionSelect">
+          <option>Safety-first</option>
+          <option>Balanced</option>
+          <option>Throughput-first</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"><span>Own-label leakage</span><span id="leakageValue">0.12</span></div>
+        <div class="control-help">How much an agent can influence the label that pays it.</div>
+        <input type="range" id="leakageSlider" min="0" max="0.5" step="0.01" value="0.12" />
+        <div class="range-meta"><span>Influence-free</span><span>Leaky</span></div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"><span>Audit rate</span><span id="auditValue">0.20</span></div>
+        <div class="control-help">How often a better anchor is observed instead of only a proxy.</div>
+        <input type="range" id="auditSlider" min="0.02" max="0.8" step="0.01" value="0.20" />
+        <div class="range-meta"><span>Rare audits</span><span>Frequent audits</span></div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"><span>Signal accuracy</span><span id="signalValue">0.80</span></div>
+        <div class="control-help">How informative each agent's local evidence is before aggregation.</div>
+        <input type="range" id="signalSlider" min="0.55" max="0.95" step="0.01" value="0.80" />
+        <div class="range-meta"><span>Weak signals</span><span>Strong signals</span></div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label"><span>Output channel</span><span id="outputLabel">Linked</span></div>
+        <div class="control-help">Does the human-readable resolution stay tied to the settled record?</div>
+        <select id="outputSelect">
+          <option value="linked">Linked</option>
+          <option value="unlinked">Unlinked</option>
+        </select>
+      </div>
+
+      <div class="controls-note">
+        Default reading order: constitution, leakage, audits, complementarity, then linked versus unlinked outputs.
+      </div>
+    </aside>
+
+    <section class="dashboard rise">
+      <div class="section-head">
+        <div>
+          <h2>Interactive dashboard</h2>
+          <p>These panels use representative stress-test values from the mechanism stack. Read the interface as a plausible coordination primitive and evaluation layer, not just a benchmark UI.</p>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <article class="panel card">
+          <h3>1) Gaming what gets scored</h3>
+          <div class="tag">Constitution sensitivity - corrected vs naive settlement</div>
+          <div class="viz"><svg id="constitutionChart" viewBox="0 0 620 330"></svg></div>
+          <div class="callout" id="constitutionCallout"></div>
+        </article>
+
+        <article class="panel card">
+          <h3>2) Own-label influence kills honesty</h3>
+          <div class="tag">Leakage -> influence -> truthful margin</div>
+          <div class="viz"><svg id="leakageChart" viewBox="0 0 620 330"></svg></div>
+          <div class="callout" id="leakageCallout"></div>
+        </article>
+
+        <article class="panel card">
+          <h3>3) Sparse audits keep proxies anchored</h3>
+          <div class="tag">Audit-efficient learning - lower regret</div>
+          <div class="viz"><svg id="auditChart" viewBox="0 0 620 330"></svg></div>
+          <div class="callout" id="auditCallout"></div>
+        </article>
+
+        <article class="panel card">
+          <h3>4) Complementary information deserves credit</h3>
+          <div class="tag">Shapley-style credit vs naive sequential scoring</div>
+          <div class="viz"><svg id="compChart" viewBox="0 0 620 330"></svg></div>
+          <div class="callout" id="compCallout"></div>
+        </article>
+
+        <article class="panel card">
+          <h3>5) Human-readable output should stay faithful</h3>
+          <div class="tag">Readable resolution artifact - provenance linkage</div>
+          <div class="viz"><svg id="outputChart" viewBox="0 0 620 300"></svg></div>
+          <div class="callout" id="outputCallout"></div>
+        </article>
+
+        <article class="panel memo-card">
+          <h3>Live resolution artifact</h3>
+          <div class="tag">What a room of builders and researchers can read in twenty seconds</div>
+          <div class="memo-grid">
+            <div class="memo-box">
+              <div class="memo-label">Settlement memo</div>
+              <div class="memo-text" id="memoText"></div>
+            </div>
+            <div class="memo-box">
+              <div class="memo-label">Why it matters</div>
+              <ul class="bullet-list" id="fitBullets"></ul>
+            </div>
+          </div>
+          <div class="callout" id="memoCallout"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel why rise">
+    <h2>Why this matters</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Candidate coordination primitive</h3>
+        <p>The right read is not "look, agents do a task." It is "here is a plausible scoring and settlement layer an arena could actually use, critique, and reuse."</p>
+      </div>
+      <div class="why-card">
+        <h3>Trust starts with what gets paid</h3>
+        <p>If the scoring rule can be steered, the system trains manipulation. Influence-free settlement is a first principle, not an optional patch.</p>
+      </div>
+      <div class="why-card">
+        <h3>Audits rescue weak proxies</h3>
+        <p>Real deployments rarely observe the true objective every round. Sparse higher-fidelity audits are how you stop the proxy from drifting too far.</p>
+      </div>
+      <div class="why-card">
+        <h3>Complementarity is everywhere</h3>
+        <p>Useful evidence is often only decisive in combination. If the reward layer cannot see that, it underpays exactly the contributors you need.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">Representative paper-backed stress-test values are used here as a teaching interface. The point of the demo is to make mechanism behavior visible, not to claim a benchmark victory.</div>
+</div>
+
+<script>
+const DATA = {
+  constitution: {
+    "Safety-first": { safety_mass: 0.765, dcss: 0.927, uncorrected: 0.648 },
+    "Balanced": { safety_mass: 0.554, dcss: 0.927, uncorrected: 0.514 },
+    "Throughput-first": { safety_mass: 0.376, dcss: 0.059, uncorrected: 0.012 }
+  },
+  leakage: {
+    lambda: [0.0, 0.03, 0.07, 0.12, 0.2, 0.35, 0.5],
+    influence: [0.0, 0.015, 0.035, 0.06, 0.1, 0.175, 0.25],
+    margin: [0.278, 0.261, 0.239, 0.21, 0.165, 0.08, -0.006]
+  },
+  audits: {
+    rho: [0.02, 0.05, 0.1, 0.2, 0.4, 0.8],
+    mean_regret: [1.589, 1.558, 1.329, 1.19, 1.173, 1.175],
+    std_regret: [0.271, 0.514, 0.446, 0.344, 0.203, 0.118]
+  },
+  complementarity: {
+    p: [0.55, 0.65, 0.8, 0.95],
+    shapley: [-0.01, -0.019, 0.025, 0.119],
+    sequential: [-0.193, -0.205, -0.152, -0.041]
+  },
+  outputFaithfulness: {
+    "Linked / concise": 0.991,
+    "Linked / deliberative": 0.988,
+    "Linked / policy-diff": 0.989,
+    "Unlinked / deliberative": 0.854
+  }
+};
+
+const scenarioText = {
+  procurement: {
+    short: "Drone procurement",
+    label: "Drone-swarm procurement",
+    memo: (c, leak, audit, signal, linked) =>
+      `A public constitution governs the selection of a coordination module for a drone swarm. With a <b>${c}</b> constitution, the mechanism places <b>${pct(DATA.constitution[c].safety_mass)}</b> of its settlement attention on safety clauses. At leakage <b>${fmt(leak, 2)}</b>, empirical influence reaches <b>${fmt(interp(DATA.leakage.lambda, DATA.leakage.influence, leak), 3)}</b>, so the own-label score must stay influence-free. At audit rate <b>${fmt(audit, 2)}</b>, representative regret is <b>${fmt(interp(DATA.audits.rho, DATA.audits.mean_regret, audit), 3)}</b>. At signal accuracy <b>${fmt(signal, 2)}</b>, Shapley-style credit is <b>${signed(interp(DATA.complementarity.p, DATA.complementarity.shapley, signal))}</b> per agent while naive sequential credit remains <b>${signed(interp(DATA.complementarity.p, DATA.complementarity.sequential, signal))}</b>. The final output is <b>${linked ? "linked" : "not linked"}</b> to the settled record.`,
+    fit: [
+      "Feels like a minimal arena for agentic procurement under adversarial pressure.",
+      "Makes it obvious that gaming the selector is different from honest reporting.",
+      "Maps cleanly to cyber-physical supply-chain coordination."
+    ],
+    note: "Cyber-physical coordination, not a toy chat task."
+  },
+  manufacturing: {
+    short: "Manufacturing",
+    label: "Collaborative manufacturing",
+    memo: (c, leak, audit, signal, linked) =>
+      `Multiple agents must source parts and assemble a novel object from an untrusted supply chain. Under a <b>${c}</b> constitution, safety-critical checks receive <b>${pct(DATA.constitution[c].safety_mass)}</b> of settlement attention. Leakage <b>${fmt(leak, 2)}</b> creates own-label influence of <b>${fmt(interp(DATA.leakage.lambda, DATA.leakage.influence, leak), 3)}</b>, so honest part inspection requires influence-free settlement. Sparse audits at <b>${fmt(audit, 2)}</b> keep the proxy objective anchored, with representative regret at <b>${fmt(interp(DATA.audits.rho, DATA.audits.mean_regret, audit), 3)}</b>. At signal accuracy <b>${fmt(signal, 2)}</b>, synergy-aware Shapley credit turns <b>${signed(interp(DATA.complementarity.p, DATA.complementarity.shapley, signal))}</b> while sequential scoring still underpays jointly useful evidence. The final output is <b>${linked ? "linked" : "not linked"}</b> to the settled record.`,
+    fit: [
+      "Natural fit for collaborative manufacturing and supplier-risk tasks.",
+      "Useful story for practitioners: compliance, throughput, and quality rarely live in one model.",
+      "Shows why complementary evidence needs explicit credit assignment."
+    ],
+    note: "Inspection, compliance, throughput, and supplier risk in one loop."
+  },
+  disaster: {
+    short: "Disaster response",
+    label: "Disaster response",
+    memo: (c, leak, audit, signal, linked) =>
+      `A mixed team of field robots and software agents maps a disaster site while some participants may be compromised. Under a <b>${c}</b> constitution, safety and verification clauses capture <b>${pct(DATA.constitution[c].safety_mass)}</b> of settlement attention. If own reports leak into settlement at <b>${fmt(leak, 2)}</b>, truthful reporting erodes as influence rises to <b>${fmt(interp(DATA.leakage.lambda, DATA.leakage.influence, leak), 3)}</b>. Sparse audits at <b>${fmt(audit, 2)}</b> help anchor the objective, reducing representative regret to <b>${fmt(interp(DATA.audits.rho, DATA.audits.mean_regret, audit), 3)}</b>. At signal accuracy <b>${fmt(signal, 2)}</b>, Shapley-style credit is <b>${signed(interp(DATA.complementarity.p, DATA.complementarity.shapley, signal))}</b>, highlighting when individually weak clues become decisive only in combination. The final output is <b>${linked ? "linked" : "not linked"}</b> to the settled record.`,
+    fit: [
+      "Direct bridge from abstract theory to embodied, high-stakes coordination.",
+      "Shows why trust is a settlement problem, not just a perception problem.",
+      "Good fit for compromised-agent and verification-heavy tasks."
+    ],
+    note: "Mixed software and embodied agents under pressure."
+  }
+};
+
+const state = {
+  scenario: "procurement",
+  constitution: "Safety-first",
+  leakage: 0.12,
+  audit: 0.20,
+  signal: 0.80,
+  output: "linked"
+};
+
+const svgNS = "http://www.w3.org/2000/svg";
+const $ = (selector) => document.querySelector(selector);
+
+function fmt(x, digits = 2) {
+  return Number(x).toFixed(digits);
+}
+
+function pct(x, digits = 1) {
+  return (100 * x).toFixed(digits) + "%";
+}
+
+function signed(x, digits = 3) {
+  const value = Number(x).toFixed(digits);
+  return (x > 0 ? "+" : "") + value;
+}
+
+function interp(xs, ys, x) {
+  if (x <= xs[0]) return ys[0];
+  if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
+  for (let i = 0; i < xs.length - 1; i += 1) {
+    if (x >= xs[i] && x <= xs[i + 1]) {
+      const t = (x - xs[i]) / (xs[i + 1] - xs[i]);
+      return ys[i] + t * (ys[i + 1] - ys[i]);
+    }
+  }
+  return ys[ys.length - 1];
+}
+
+function clearSVG(svg) {
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+}
+
+function el(name, attrs = {}, parent = null) {
+  const node = document.createElementNS(svgNS, name);
+  Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+  if (parent) parent.appendChild(node);
+  return node;
+}
+
+function text(svg, x, y, str, attrs = {}) {
+  const node = el("text", Object.assign({ x, y }, attrs), svg);
+  node.textContent = str;
+  return node;
+}
+
+function color(name) {
+  const map = {
+    teal: getComputedStyle(document.documentElement).getPropertyValue("--teal").trim(),
+    blue: getComputedStyle(document.documentElement).getPropertyValue("--blue").trim(),
+    orange: getComputedStyle(document.documentElement).getPropertyValue("--orange").trim(),
+    rust: getComputedStyle(document.documentElement).getPropertyValue("--rust").trim(),
+    gold: getComputedStyle(document.documentElement).getPropertyValue("--gold").trim(),
+    plum: getComputedStyle(document.documentElement).getPropertyValue("--plum").trim(),
+    ink: getComputedStyle(document.documentElement).getPropertyValue("--ink").trim(),
+    muted: getComputedStyle(document.documentElement).getPropertyValue("--muted").trim(),
+    line: getComputedStyle(document.documentElement).getPropertyValue("--line").trim()
+  };
+  return map[name] || name;
+}
+
+function drawAxes(svg, x0, y0, w, h, xTicks, yTicks, opts = {}) {
+  el("line", { x1: x0, y1: y0 + h, x2: x0 + w, y2: y0 + h, stroke: color("line"), "stroke-width": 1.2 }, svg);
+  el("line", { x1: x0, y1: y0, x2: x0, y2: y0 + h, stroke: color("line"), "stroke-width": 1.2 }, svg);
+
+  xTicks.forEach((tick) => {
+    const x = x0 + tick.pos * w;
+    el("line", { x1: x, y1: y0 + h, x2: x, y2: y0 + h + 5, stroke: color("line"), "stroke-width": 1 }, svg);
+    text(svg, x, y0 + h + 18, tick.label, { "text-anchor": "middle", fill: color("muted"), "font-size": 11 });
+  });
+
+  yTicks.forEach((tick) => {
+    const y = y0 + h - tick.pos * h;
+    el("line", { x1: x0 - 5, y1: y, x2: x0, y2: y, stroke: color("line"), "stroke-width": 1 }, svg);
+    text(svg, x0 - 8, y + 4, tick.label, { "text-anchor": "end", fill: color("muted"), "font-size": 11 });
+  });
+
+  if (opts.xLabel) {
+    text(svg, x0 + w / 2, y0 + h + 38, opts.xLabel, { "text-anchor": "middle", fill: color("muted"), "font-size": 11 });
+  }
+
+  if (opts.yLabel) {
+    const label = text(svg, 16, y0 + h / 2, opts.yLabel, { fill: color("muted"), "font-size": 11 });
+    label.setAttribute("transform", `rotate(-90 16 ${y0 + h / 2})`);
+  }
+}
+
+function pathFrom(points) {
+  return points.map((point, idx) => `${idx === 0 ? "M" : "L"}${point[0]} ${point[1]}`).join(" ");
+}
+
+function renderConstitution() {
+  const svg = $("#constitutionChart");
+  clearSVG(svg);
+  const x0 = 52;
+  const y0 = 30;
+  const w = 540;
+  const h = 220;
+  const groups = Object.keys(DATA.constitution);
+  const selected = state.constitution;
+  const series = [
+    { key: "safety_mass", label: "Safety settlement mass", fill: "teal" },
+    { key: "dcss", label: "Truth - lie (corrected)", fill: "blue" },
+    { key: "uncorrected", label: "Truth - lie (naive)", fill: "orange" }
+  ];
+
+  drawAxes(
+    svg,
+    x0,
+    y0,
+    w,
+    h,
+    groups.map((group, idx) => ({ pos: (idx + 0.5) / groups.length, label: group })),
+    [0, 0.25, 0.5, 0.75, 1].map((value) => ({ pos: value, label: value.toFixed(2).replace(/\.00$/, "") })),
+    { yLabel: "Representative value" }
+  );
+
+  const groupW = w / groups.length;
+  const barW = groupW * 0.2;
+  groups.forEach((group, idx) => {
+    const gx = x0 + idx * groupW;
+    if (group === selected) {
+      el("rect", { x: gx + 6, y: y0 + 8, width: groupW - 12, height: h - 16, rx: 16, fill: "rgba(37, 99, 235, 0.06)", stroke: "rgba(37, 99, 235, 0.18)", "stroke-width": 1.4 }, svg);
+    }
+    series.forEach((s, offset) => {
+      const value = DATA.constitution[group][s.key];
+      const barH = value * h;
+      const x = gx + groupW * 0.15 + offset * (barW + groupW * 0.06);
+      const y = y0 + h - barH;
+      el("rect", { x, y, width: barW, height: barH, rx: 10, fill: color(s.fill) }, svg);
+      text(svg, x + barW / 2, y - 6, value.toFixed(3), { "text-anchor": "middle", fill: color("ink"), "font-size": 10 });
+    });
+  });
+
+  let legendX = x0;
+  series.forEach((s) => {
+    el("rect", { x: legendX, y: 8, width: 14, height: 14, rx: 4, fill: color(s.fill) }, svg);
+    text(svg, legendX + 20, 20, s.label, { fill: color("muted"), "font-size": 11 });
+    legendX += 178;
+  });
+
+  const current = DATA.constitution[selected];
+  $("#constitutionCallout").innerHTML = `<b>${selected}</b> makes the mechanism settle safety-related clauses <b>${pct(current.safety_mass)}</b> of the time. The corrected truthful advantage stays at <b>${fmt(current.dcss, 3)}</b>, while the naive version falls to <b>${fmt(current.uncorrected, 3)}</b>.`;
+}
+
+function renderLeakage() {
+  const svg = $("#leakageChart");
+  clearSVG(svg);
+  const x0 = 52;
+  const y0 = 28;
+  const w = 520;
+  const h = 220;
+  const xs = DATA.leakage.lambda;
+  const ys1 = DATA.leakage.margin;
+  const ys2 = DATA.leakage.influence;
+
+  drawAxes(
+    svg,
+    x0,
+    y0,
+    w,
+    h,
+    [0, 0.1, 0.2, 0.3, 0.4, 0.5].map((value) => ({ pos: value / 0.5, label: value.toFixed(1) })),
+    [-0.05, 0, 0.1, 0.2, 0.3].map((value) => ({ pos: (value + 0.05) / 0.35, label: String(value.toFixed(2)).replace(/\.00$/, "") })),
+    { xLabel: "Own-label leakage", yLabel: "Truthful margin" }
+  );
+
+  [0, 0.05, 0.1, 0.15, 0.2, 0.25].forEach((value) => {
+    const y = y0 + h - (value / 0.25) * h;
+    text(svg, x0 + w + 10, y + 4, value.toFixed(2).replace(/\.00$/, ""), { fill: color("muted"), "font-size": 11 });
+  });
+  text(svg, x0 + w + 44, y0 + h / 2, "Empirical influence", {
+    fill: color("muted"),
+    "font-size": 11,
+    "text-anchor": "middle",
+    transform: `rotate(90 ${x0 + w + 44} ${y0 + h / 2})`
+  });
+
+  const zeroY = y0 + h - ((0 + 0.05) / 0.35) * h;
+  el("line", { x1: x0, y1: zeroY, x2: x0 + w, y2: zeroY, stroke: "#d8d1c6", "stroke-width": 1.2, "stroke-dasharray": "4 4" }, svg);
+
+  const marginPoints = xs.map((x, idx) => [x0 + (x / 0.5) * w, y0 + h - ((ys1[idx] + 0.05) / 0.35) * h]);
+  const influencePoints = xs.map((x, idx) => [x0 + (x / 0.5) * w, y0 + h - (ys2[idx] / 0.25) * h]);
+
+  el("path", { d: pathFrom(marginPoints), fill: "none", stroke: color("blue"), "stroke-width": 3 }, svg);
+  el("path", { d: pathFrom(influencePoints), fill: "none", stroke: color("rust"), "stroke-width": 2.5 }, svg);
+  marginPoints.forEach((point) => el("circle", { cx: point[0], cy: point[1], r: 4.5, fill: color("blue") }, svg));
+  influencePoints.forEach((point) => el("rect", { x: point[0] - 4, y: point[1] - 4, width: 8, height: 8, rx: 2, fill: color("rust") }, svg));
+
+  const leak = state.leakage;
+  const margin = interp(xs, ys1, leak);
+  const influence = interp(xs, ys2, leak);
+  const cx = x0 + (leak / 0.5) * w;
+  const cy1 = y0 + h - ((margin + 0.05) / 0.35) * h;
+  const cy2 = y0 + h - (influence / 0.25) * h;
+
+  el("line", { x1: cx, y1: y0, x2: cx, y2: y0 + h, stroke: "rgba(18, 32, 51, 0.18)", "stroke-width": 1.2, "stroke-dasharray": "5 4" }, svg);
+  el("circle", { cx, cy: cy1, r: 7.5, fill: "#fff", stroke: color("blue"), "stroke-width": 3 }, svg);
+  el("circle", { cx, cy: cy2, r: 7.5, fill: "#fff", stroke: color("rust"), "stroke-width": 3 }, svg);
+
+  el("rect", { x: x0, y: 8, width: 14, height: 14, rx: 4, fill: color("blue") }, svg);
+  text(svg, x0 + 20, 20, "Truthful margin", { fill: color("muted"), "font-size": 11 });
+  el("rect", { x: x0 + 150, y: 8, width: 14, height: 14, rx: 4, fill: color("rust") }, svg);
+  text(svg, x0 + 170, 20, "Empirical influence", { fill: color("muted"), "font-size": 11 });
+
+  $("#leakageCallout").innerHTML = `At <b>${fmt(leak, 2)}</b>, empirical influence is <b>${fmt(influence, 3)}</b> and the representative truthful margin is <b>${fmt(margin, 3)}</b>. That is the visible reason own-label settlement must be influence-free.`;
+}
+
+function renderAudit() {
+  const svg = $("#auditChart");
+  clearSVG(svg);
+  const x0 = 58;
+  const y0 = 28;
+  const w = 520;
+  const h = 220;
+  const xs = DATA.audits.rho;
+  const ys = DATA.audits.mean_regret;
+  const std = DATA.audits.std_regret;
+  const xmin = Math.log10(0.02);
+  const xmax = Math.log10(0.8);
+  const ymin = 1.0;
+  const ymax = 1.8;
+
+  drawAxes(
+    svg,
+    x0,
+    y0,
+    w,
+    h,
+    [0.02, 0.05, 0.1, 0.2, 0.4, 0.8].map((value) => ({ pos: (Math.log10(value) - xmin) / (xmax - xmin), label: String(value) })),
+    [1.0, 1.2, 1.4, 1.6, 1.8].map((value) => ({ pos: (value - ymin) / (ymax - ymin), label: value.toFixed(1) })),
+    { xLabel: "Audit rate (log scale)", yLabel: "Final regret" }
+  );
+
+  const points = xs.map((x, idx) => [
+    x0 + ((Math.log10(x) - xmin) / (xmax - xmin)) * w,
+    y0 + h - ((ys[idx] - ymin) / (ymax - ymin)) * h
+  ]);
+  el("path", { d: pathFrom(points), fill: "none", stroke: color("plum"), "stroke-width": 3 }, svg);
+  xs.forEach((x, idx) => {
+    const px = points[idx][0];
+    const py = points[idx][1];
+    const yHi = y0 + h - (((ys[idx] + std[idx]) - ymin) / (ymax - ymin)) * h;
+    const yLo = y0 + h - (((ys[idx] - std[idx]) - ymin) / (ymax - ymin)) * h;
+    el("line", { x1: px, y1: yHi, x2: px, y2: yLo, stroke: color("plum"), "stroke-width": 1.5 }, svg);
+    el("line", { x1: px - 5, y1: yHi, x2: px + 5, y2: yHi, stroke: color("plum"), "stroke-width": 1.5 }, svg);
+    el("line", { x1: px - 5, y1: yLo, x2: px + 5, y2: yLo, stroke: color("plum"), "stroke-width": 1.5 }, svg);
+    el("circle", { cx: px, cy: py, r: 5, fill: color("plum") }, svg);
+  });
+
+  const audit = state.audit;
+  const regret = interp(xs, ys, audit);
+  const px = x0 + ((Math.log10(audit) - xmin) / (xmax - xmin)) * w;
+  const py = y0 + h - ((regret - ymin) / (ymax - ymin)) * h;
+
+  el("line", { x1: px, y1: y0, x2: px, y2: y0 + h, stroke: "rgba(18, 32, 51, 0.18)", "stroke-width": 1.2, "stroke-dasharray": "5 4" }, svg);
+  el("circle", { cx: px, cy: py, r: 8, fill: color("gold"), stroke: color("ink"), "stroke-width": 2 }, svg);
+
+  $("#auditCallout").innerHTML = `At <b>${fmt(audit, 2)}</b>, representative final regret is <b>${fmt(regret, 3)}</b>. More audits do not make the system perfect. They stop the proxy objective from drifting too far off what we actually care about.`;
+}
+
+function renderComp() {
+  const svg = $("#compChart");
+  clearSVG(svg);
+  const x0 = 52;
+  const y0 = 28;
+  const w = 540;
+  const h = 220;
+  const xs = DATA.complementarity.p;
+  const ys1 = DATA.complementarity.shapley;
+  const ys2 = DATA.complementarity.sequential;
+  const ymin = -0.22;
+  const ymax = 0.14;
+
+  drawAxes(
+    svg,
+    x0,
+    y0,
+    w,
+    h,
+    [0.55, 0.65, 0.75, 0.85, 0.95].map((value) => ({ pos: (value - 0.55) / 0.40, label: value.toFixed(2) })),
+    [-0.20, -0.10, 0.00, 0.10].map((value) => ({ pos: (value - ymin) / (ymax - ymin), label: (value > 0 ? "+" : "") + value.toFixed(2) })),
+    { xLabel: "Signal accuracy", yLabel: "Expected payment" }
+  );
+
+  const zeroY = y0 + h - ((0 - ymin) / (ymax - ymin)) * h;
+  el("line", { x1: x0, y1: zeroY, x2: x0 + w, y2: zeroY, stroke: "#d8d1c6", "stroke-width": 1.2, "stroke-dasharray": "4 4" }, svg);
+
+  const points1 = xs.map((x, idx) => [x0 + ((x - 0.55) / 0.40) * w, y0 + h - ((ys1[idx] - ymin) / (ymax - ymin)) * h]);
+  const points2 = xs.map((x, idx) => [x0 + ((x - 0.55) / 0.40) * w, y0 + h - ((ys2[idx] - ymin) / (ymax - ymin)) * h]);
+  el("path", { d: pathFrom(points1), fill: "none", stroke: color("teal"), "stroke-width": 3 }, svg);
+  el("path", { d: pathFrom(points2), fill: "none", stroke: color("orange"), "stroke-width": 3 }, svg);
+  points1.forEach((point) => el("circle", { cx: point[0], cy: point[1], r: 4.6, fill: color("teal") }, svg));
+  points2.forEach((point) => el("rect", { x: point[0] - 4, y: point[1] - 4, width: 8, height: 8, rx: 2, fill: color("orange") }, svg));
+
+  const signal = state.signal;
+  const shapley = interp(xs, ys1, signal);
+  const sequential = interp(xs, ys2, signal);
+  const cx = x0 + ((signal - 0.55) / 0.40) * w;
+  const cy1 = y0 + h - ((shapley - ymin) / (ymax - ymin)) * h;
+  const cy2 = y0 + h - ((sequential - ymin) / (ymax - ymin)) * h;
+
+  el("line", { x1: cx, y1: y0, x2: cx, y2: y0 + h, stroke: "rgba(18, 32, 51, 0.18)", "stroke-width": 1.2, "stroke-dasharray": "5 4" }, svg);
+  el("circle", { cx, cy: cy1, r: 7.5, fill: "#fff", stroke: color("teal"), "stroke-width": 3 }, svg);
+  el("circle", { cx, cy: cy2, r: 7.5, fill: "#fff", stroke: color("orange"), "stroke-width": 3 }, svg);
+
+  el("rect", { x: x0, y: 8, width: 14, height: 14, rx: 4, fill: color("teal") }, svg);
+  text(svg, x0 + 20, 20, "Shapley-style credit", { fill: color("muted"), "font-size": 11 });
+  el("rect", { x: x0 + 178, y: 8, width: 14, height: 14, rx: 4, fill: color("orange") }, svg);
+  text(svg, x0 + 198, 20, "Sequential scoring", { fill: color("muted"), "font-size": 11 });
+
+  $("#compCallout").innerHTML = `At <b>${fmt(signal, 2)}</b>, synergy-aware credit is <b>${signed(shapley)}</b> while sequential credit is <b>${signed(sequential)}</b>. Individually weak clues can still matter once the right pieces meet.`;
+}
+
+function renderOutput() {
+  const svg = $("#outputChart");
+  clearSVG(svg);
+  const items = [
+    ["Linked / concise", DATA.outputFaithfulness["Linked / concise"], "teal"],
+    ["Linked / deliberative", DATA.outputFaithfulness["Linked / deliberative"], "blue"],
+    ["Linked / policy-diff", DATA.outputFaithfulness["Linked / policy-diff"], "plum"],
+    ["Unlinked / deliberative", DATA.outputFaithfulness["Unlinked / deliberative"], "orange"]
+  ];
+  const selected = state.output === "linked" ? ["Linked / concise", "Linked / deliberative", "Linked / policy-diff"] : ["Unlinked / deliberative"];
+  const x0 = 170;
+  const y0 = 30;
+  const w = 390;
+  const h = 200;
+
+  drawAxes(
+    svg,
+    x0,
+    y0,
+    w,
+    h,
+    [0.80, 0.85, 0.90, 0.95, 1.00].map((value) => ({ pos: (value - 0.80) / 0.20, label: value.toFixed(2) })),
+    items.map((item, idx) => ({ pos: (items.length - 1 - idx + 0.5) / items.length, label: "" })),
+    { xLabel: "Label agreement" }
+  );
+
+  items.forEach((item, idx) => {
+    const y = y0 + idx * (h / items.length) + 12;
+    text(svg, x0 - 12, y + 18, item[0], { "text-anchor": "end", fill: color("muted"), "font-size": 11 });
+    const barW = ((item[1] - 0.80) / 0.20) * w;
+    const fill = selected.includes(item[0]) ? color(item[2]) : "#d8dfe8";
+    const opacity = selected.includes(item[0]) ? 1 : 0.6;
+    el("rect", { x: x0, y: y + 4, width: barW, height: 24, rx: 8, fill, opacity }, svg);
+    text(svg, x0 + barW + 8, y + 22, item[1].toFixed(3), { fill: color("ink"), "font-size": 11 });
+  });
+
+  if (state.output === "linked") {
+    $("#outputCallout").innerHTML = `When the output channel is <b>linked</b>, label agreement stays in the <b>0.988-0.991</b> range across styles. The memo people read is tied to the same thing that got settled and paid.`;
+  } else {
+    $("#outputCallout").innerHTML = `In the <b>unlinked</b> setting, agreement drops to <b>0.854</b>. That is the easy-to-read version of "pretty explanations are not enough if they drift away from settlement."`;
+  }
+}
+
+function updateMemo() {
+  const linked = state.output === "linked";
+  const scenario = scenarioText[state.scenario];
+  $("#memoText").innerHTML = scenario.memo(state.constitution, state.leakage, state.audit, state.signal, linked);
+  $("#fitBullets").innerHTML = scenario.fit.map((item) => `<li>${item}</li>`).join("");
+
+  const c = DATA.constitution[state.constitution];
+  const margin = interp(DATA.leakage.lambda, DATA.leakage.margin, state.leakage);
+  const regret = interp(DATA.audits.rho, DATA.audits.mean_regret, state.audit);
+  const shapley = interp(DATA.complementarity.p, DATA.complementarity.shapley, state.signal);
+  $("#memoCallout").innerHTML = `<b>One-line readout:</b> under a <b>${state.constitution}</b> constitution, safety settlement mass is <b>${pct(c.safety_mass)}</b>; at leakage <b>${fmt(state.leakage, 2)}</b> the truthful margin is <b>${fmt(margin, 3)}</b>; at audit rate <b>${fmt(state.audit, 2)}</b> regret sits near <b>${fmt(regret, 3)}</b>; and at signal accuracy <b>${fmt(state.signal, 2)}</b> synergy-aware credit is <b>${signed(shapley)}</b>.`;
+}
+
+function updateHero() {
+  const scenario = scenarioText[state.scenario];
+  const constitution = DATA.constitution[state.constitution];
+  const margin = interp(DATA.leakage.lambda, DATA.leakage.margin, state.leakage);
+  const regret = interp(DATA.audits.rho, DATA.audits.mean_regret, state.audit);
+  const fidelity = state.output === "linked" ? DATA.outputFaithfulness["Linked / concise"] : DATA.outputFaithfulness["Unlinked / deliberative"];
+
+  $("#heroScenario").textContent = scenario.short;
+  $("#heroScenarioNote").textContent = scenario.note;
+  $("#heroOutput").textContent = state.output === "linked" ? "Linked" : "Unlinked";
+  $("#heroConstitution").textContent = state.constitution;
+  $("#statSafety").textContent = pct(constitution.safety_mass);
+  $("#statMargin").textContent = fmt(margin, 3);
+  $("#statRegret").textContent = fmt(regret, 3);
+  $("#statFaithfulness").textContent = fidelity.toFixed(3);
+  $("#scenarioLabel").textContent = scenario.label;
+  $("#constitutionLabel").textContent = state.constitution;
+  $("#leakageValue").textContent = fmt(state.leakage, 2);
+  $("#auditValue").textContent = fmt(state.audit, 2);
+  $("#signalValue").textContent = fmt(state.signal, 2);
+  $("#outputLabel").textContent = state.output === "linked" ? "Linked" : "Unlinked";
+}
+
+function renderAll() {
+  updateHero();
+  renderConstitution();
+  renderLeakage();
+  renderAudit();
+  renderComp();
+  renderOutput();
+  updateMemo();
+}
+
+function bindValues() {
+  $("#scenarioSelect").value = state.scenario;
+  $("#constitutionSelect").value = state.constitution;
+  $("#leakageSlider").value = state.leakage;
+  $("#auditSlider").value = state.audit;
+  $("#signalSlider").value = state.signal;
+  $("#outputSelect").value = state.output;
+}
+
+function resetDefaults() {
+  state.scenario = "procurement";
+  state.constitution = "Safety-first";
+  state.leakage = 0.12;
+  state.audit = 0.20;
+  state.signal = 0.80;
+  state.output = "linked";
+  bindValues();
+  renderAll();
+}
+
+function bind() {
+  bindValues();
+  $("#scenarioSelect").addEventListener("change", (event) => {
+    state.scenario = event.target.value;
+    renderAll();
+  });
+  $("#constitutionSelect").addEventListener("change", (event) => {
+    state.constitution = event.target.value;
+    renderAll();
+  });
+  $("#leakageSlider").addEventListener("input", (event) => {
+    state.leakage = parseFloat(event.target.value);
+    renderAll();
+  });
+  $("#auditSlider").addEventListener("input", (event) => {
+    state.audit = parseFloat(event.target.value);
+    renderAll();
+  });
+  $("#signalSlider").addEventListener("input", (event) => {
+    state.signal = parseFloat(event.target.value);
+    renderAll();
+  });
+  $("#outputSelect").addEventListener("change", (event) => {
+    state.output = event.target.value;
+    renderAll();
+  });
+  $("#resetBtn").addEventListener("click", resetDefaults);
+  $("#copyPitchBtn").addEventListener("click", async () => {
+    const msg = "Vibe Check Arena is a live demo of the settlement layer for trustworthy multi-agent AI: public constitutions, influence-free scoring, sparse audits, and credit for complementary evidence.";
+    try {
+      await navigator.clipboard.writeText(msg);
+      $("#copyPitchBtn").textContent = "Pitch copied";
+      setTimeout(() => {
+        $("#copyPitchBtn").textContent = "Copy one-line pitch";
+      }, 1400);
+    } catch (_err) {
+      window.alert(msg);
+    }
+  });
+}
+
+let tourTimer = null;
+let touring = false;
+const tourSteps = [
+  { scenario: "procurement", constitution: "Safety-first", leakage: 0.12, audit: 0.20, signal: 0.80, output: "linked" },
+  { scenario: "procurement", constitution: "Throughput-first", leakage: 0.12, audit: 0.20, signal: 0.80, output: "linked" },
+  { scenario: "procurement", constitution: "Throughput-first", leakage: 0.50, audit: 0.20, signal: 0.80, output: "linked" },
+  { scenario: "procurement", constitution: "Throughput-first", leakage: 0.12, audit: 0.80, signal: 0.80, output: "linked" },
+  { scenario: "disaster", constitution: "Balanced", leakage: 0.12, audit: 0.40, signal: 0.95, output: "linked" },
+  { scenario: "disaster", constitution: "Balanced", leakage: 0.12, audit: 0.40, signal: 0.95, output: "unlinked" }
+];
+
+function applyStep(step) {
+  Object.assign(state, step);
+  bindValues();
+  renderAll();
+}
+
+function stopTour() {
+  touring = false;
+  clearInterval(tourTimer);
+  $("#tourBtn").textContent = "Play guided 90s tour";
+}
+
+function playTour() {
+  if (touring) {
+    stopTour();
+    return;
+  }
+  touring = true;
+  $("#tourBtn").textContent = "Stop tour";
+  let idx = 0;
+  applyStep(tourSteps[idx]);
+  tourTimer = setInterval(() => {
+    idx += 1;
+    if (idx >= tourSteps.length) {
+      stopTour();
+      return;
+    }
+    applyStep(tourSteps[idx]);
+  }, 2500);
+}
+
+$("#tourBtn").addEventListener("click", playTour);
+
+bind();
+renderAll();
+</script>
+</body>
+</html>
