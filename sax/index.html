@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#11131a" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+<meta name="application-name" content="Sax Coach" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Sax Coach" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+
+<title>Coltrane Sax Coach — Offline Tenor Trainer</title>
+<style>
+  :root{
+    --bg:#0d0f14; --panel:#151821; --panel2:#1b1f2a; --text:#f2f3f7; --muted:#a8aeba;
+    --good:#54d69b; --warn:#ffc866; --bad:#ff7d7d; --accent:#8ba7ff; --line:#2b3140;
+  }
+  *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b0d12,#111520 55%,#0b0d12);color:var(--text);font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+  button,input,select{font:inherit} button{cursor:pointer}
+  .app{max-width:1050px;margin:auto;padding:18px 14px 40px}
+  header{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+  h1{font-size:24px;line-height:1.15;margin:0 0 5px}.sub{color:var(--muted);font-size:13px}
+  .pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#11151d;color:var(--muted);white-space:nowrap}
+  .dot{width:8px;height:8px;border-radius:50%;background:#6b7280}.dot.on{background:var(--good);box-shadow:0 0 12px #54d69b99}
+  .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}.panel{background:rgba(21,24,33,.96);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 12px 30px #0003}
+  .hero{grid-row:span 2}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+  .target{font-size:80px;font-weight:800;line-height:.95;letter-spacing:-.04em;margin:8px 0 2px}.written{font-size:14px;color:var(--muted)}
+  .detected{display:flex;align-items:baseline;gap:10px;margin-top:18px}.detected .note{font-size:42px;font-weight:800}.detected .details{color:var(--muted)}
+  .feedback{margin:12px 0 10px;padding:11px 12px;border-radius:11px;background:#10141c;border:1px solid var(--line);min-height:46px;font-weight:650}
+  .feedback.good{border-color:#54d69b66;color:#aef3d4}.feedback.warn{border-color:#ffc86666;color:#ffe2a7}.feedback.bad{border-color:#ff7d7d55;color:#ffb7b7}
+  .meter{position:relative;height:34px;background:#0d1017;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0}.meter .center{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff7}.meter .safe{position:absolute;left:32%;right:32%;top:0;bottom:0;background:#54d69b16}.needle{position:absolute;top:4px;bottom:4px;width:4px;border-radius:3px;background:var(--accent);left:50%;transition:left .08s linear}.ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+  .holdbar{height:10px;background:#0c0f15;border-radius:999px;overflow:hidden;border:1px solid var(--line)}.holdbar>div{height:100%;width:0;background:var(--good);transition:width .08s linear}
+  button{border:1px solid var(--line);background:#202635;color:var(--text);padding:9px 12px;border-radius:10px;font-weight:650}button:hover{background:#293145}button.primary{background:#4964d7;border-color:#667ff0}button.good{background:#216746;border-color:#318d61}button.ghost{background:transparent}button:disabled{opacity:.45;cursor:not-allowed}
+  .exercise-list{display:grid;gap:7px;margin-top:10px}.ex{padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#11151d;cursor:pointer}.ex.active{border-color:#738cf0;background:#17203a}.ex.done:after{content:'✓';float:right;color:var(--good);font-weight:800}.ex b{display:block}.ex small{color:var(--muted)}
+  .sequence{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0}.step{min-width:34px;text-align:center;padding:6px 7px;background:#10141b;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-weight:700}.step.now{background:#314274;color:white;border-color:#7890f2}.step.ok{background:#183e30;color:#baf5db;border-color:#2a7757}
+  .score{font-size:32px;font-weight:800}.score small{font-size:12px;color:var(--muted);font-weight:600}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.stat{padding:9px;background:#11151d;border:1px solid var(--line);border-radius:10px;text-align:center}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
+  .finger-wrap{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;margin-top:9px}.sax{position:relative;width:90px;height:245px;margin:auto;background:linear-gradient(90deg,#6e5524,#d7ad4c,#7c5f27);border-radius:40px 40px 24px 24px;box-shadow:inset 8px 0 18px #0005,inset -8px 0 18px #fff2}.keys{position:absolute;left:17px;right:17px;top:42px;display:grid;grid-template-columns:1fr 1fr;gap:8px 11px}.key{width:24px;height:24px;border:2px solid #e7d7a1;border-radius:50%;background:#2227;display:grid;place-items:center;font-size:10px;color:#eee}.key.down{background:#f7d36a;color:#2d2208;box-shadow:0 0 10px #ffdd7655}.extras{margin-top:9px;display:flex;gap:5px;flex-wrap:wrap}.extra{font-size:11px;padding:4px 6px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}.extra.on{color:#ffe99a;border-color:#a98b33;background:#57461755}.finger-text b{font-size:18px}.hint{color:var(--muted);font-size:12px;margin-top:5px}.alts{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.alts button{padding:6px 8px;font-size:12px}
+  .audioBox{display:grid;gap:8px}.audioBox audio{width:100%}.range{display:flex;gap:9px;align-items:center}.range input{flex:1}.notice{padding:9px 10px;border:1px solid #725c2d;background:#3d331d;border-radius:9px;color:#ffe4a3;font-size:12px}
+  details{margin-top:9px;border-top:1px solid var(--line);padding-top:9px}summary{cursor:pointer;color:#dbe2ff;font-weight:650}.settings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.settings label{display:grid;gap:5px;color:var(--muted);font-size:12px}.settings input{width:100%}
+  .privacy{font-size:11px;color:var(--muted);margin-top:8px}.kbd{font-family:ui-monospace,monospace;background:#0d1118;border:1px solid var(--line);padding:1px 5px;border-radius:5px}
+  .tune-panel{margin-bottom:12px}.tune-top{display:grid;grid-template-columns:minmax(180px,.7fr) 1.3fr;gap:12px;align-items:end}
+  .tune-panel select{width:100%;background:#11151d;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}
+  .tune-info{padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:#11151d}
+  .tune-info b{font-size:17px}.concept{color:#d9e1ff;margin-top:3px}.curriculum{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .curriculum button{padding:6px 8px;font-size:12px}.curriculum button.active{background:#314274;border-color:#7890f2}
+  .formline{margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:#10141b;color:var(--muted);font-size:12px}
+  .formline b{color:var(--text)}
+  @media(max-width:760px){.tune-top{grid-template-columns:1fr}}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.hero{grid-row:auto}.target{font-size:68px}.finger-wrap{grid-template-columns:100px 1fr}.app{padding:12px 10px 30px}header{align-items:center}.sub{max-width:65vw}.stats{grid-template-columns:repeat(3,1fr)}}
+
+  .install-panel{display:none;margin-bottom:12px;padding:12px 14px;border:1px solid #4964d766;border-radius:14px;background:linear-gradient(135deg,#17203a,#11151d)}
+  .install-panel.show{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .install-copy{min-width:220px;flex:1}.install-copy b{display:block}.install-copy small{color:var(--muted)}
+  .install-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .modal-backdrop{display:none;position:fixed;inset:0;z-index:999;background:#000b;align-items:flex-end;justify-content:center;padding:14px}
+  .modal-backdrop.show{display:flex}
+  .install-modal{width:min(560px,100%);background:#151821;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 24px 80px #0008}
+  .install-modal h2{margin:0 0 8px;font-size:20px}.install-modal p{margin:8px 0;color:var(--muted)}
+  .install-steps{margin:12px 0;padding-left:22px}.install-steps li{margin:7px 0}
+  @media(min-width:700px){.modal-backdrop{align-items:center}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><h1>Coltrane Sax Coach</h1><div class="sub">Offline tenor trainer. You think in <b>concert pitch</b>; written tenor notes stay secondary.</div></div>
+  <div class="pill"><span id="micDot" class="dot"></span><span id="micStatus">Mic off</span></div>
+</header>
+
+<section id="installPanel" class="install-panel">
+  <div class="install-copy">
+    <b id="installTitle">Install Sax Coach</b>
+    <small id="installText">Save it to your home screen and use it offline like a local app.</small>
+  </div>
+  <div class="install-actions">
+    <button id="installBtn" class="primary">Install app</button>
+    <button id="dismissInstallBtn" class="ghost">Not now</button>
+  </div>
+</section>
+
+
+<section class="panel tune-panel">
+  <div class="tune-top">
+    <div>
+      <div class="label">Tune</div>
+      <select id="tuneSelect"></select>
+    </div>
+    <div id="tuneInfo" class="tune-info"></div>
+  </div>
+  <div id="curriculum" class="curriculum"></div>
+  <div class="hint" style="margin-top:8px">These are ear/fingering/form exercises built around each tune, not a substitute for the recording or a full copyrighted melody transcription. Load your own recording below and learn the head by ear against this vocabulary.</div>
+</section>
+
+<div class="grid">
+<section class="panel hero">
+  <div class="row between">
+    <div><div class="label">Target · concert pitch</div><div id="targetNote" class="target">C</div><div id="writtenTarget" class="written">tenor fingering: written D</div></div>
+    <div class="row"><button id="hearBtn">▶ Hear target</button><button id="micBtn" class="primary">Start microphone</button></div>
+  </div>
+
+  <div class="detected"><div id="heardNote" class="note">—</div><div id="heardDetails" class="details">Play a note</div></div>
+  <div class="meter"><div class="safe"></div><div class="center"></div><div id="needle" class="needle"></div></div>
+  <div class="ticks"><span>−50¢ flat</span><span>center</span><span>+50¢ sharp</span></div>
+  <div id="feedback" class="feedback">Start the microphone, then play the target note.</div>
+  <div class="label" style="margin:13px 0 5px">Hold / stability</div>
+  <div class="holdbar"><div id="holdFill"></div></div>
+
+  <div style="margin-top:17px" class="row between">
+    <div><div class="label">Current exercise</div><b id="exerciseName">1 · Five-note lock</b><div id="exerciseDesc" class="hint"></div></div>
+    <div class="row"><button id="startExBtn" class="good">Start / restart</button><button id="skipBtn" class="ghost">Skip note</button></div>
+  </div>
+  <div id="sequence" class="sequence"></div><div id="formStatus" class="formline" style="display:none"></div>
+  <div class="stats">
+    <div class="stat"><b id="sessionScore">—</b><span>exercise score</span></div>
+    <div class="stat"><b id="pitchStat">—</b><span>avg pitch error</span></div>
+    <div class="stat"><b id="bestStat">—</b><span>best score</span></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="label">Fingering · comfortable lower register</div>
+  <div class="finger-wrap">
+    <div class="sax"><div class="keys">
+      <div id="L1" class="key">L1</div><div id="R1" class="key">R1</div>
+      <div id="L2" class="key">L2</div><div id="R2" class="key">R2</div>
+      <div id="L3" class="key">L3</div><div id="R3" class="key">R3</div>
+    </div></div>
+    <div class="finger-text">
+      <b id="fingerTitle">Written D</b>
+      <div id="fingerDesc" class="hint"></div>
+      <div id="extras" class="extras"></div>
+      <div id="alts" class="alts"></div>
+      <div class="hint" style="margin-top:10px">Filled circles = keys held down. L1/L2/L3 are left index/middle/ring; R1/R2/R3 are right index/middle/ring.</div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="row between"><div><div class="label">Progression</div><b id="progressTitle">Build tune vocabulary</b></div><div id="progressCount" class="pill">0 / 7</div></div>
+  <div id="exerciseList" class="exercise-list"></div>
+</section>
+
+<section class="panel">
+  <div class="label">Practice with your recording</div>
+  <div class="audioBox">
+    <div class="hint">Optional: load an audio file from this device. It never uploads. Use headphones so the microphone hears your sax, not the recording.</div>
+    <input id="audioFile" type="file" accept="audio/*" />
+    <audio id="audio" controls></audio>
+    <div class="range"><span class="hint">Speed</span><input id="speed" type="range" min="0.5" max="1.1" step="0.05" value="0.8"><b id="speedVal">0.80×</b></div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="label">Mic behavior</div>
+  <div class="notice">Pitch detection is optimized for one saxophone at a time. Disable speaker playback or use headphones while grading.</div>
+  <details>
+    <summary>Settings & offline setup</summary>
+    <div class="settings">
+      <label>Allowed tuning error <span id="tolLabel">±35¢</span><input id="tolerance" type="range" min="15" max="50" step="1" value="35"></label>
+      <label>Mic sensitivity <span id="sensLabel">normal</span><input id="sensitivity" type="range" min="5" max="35" step="1" value="13"></label><label>Timed-form tempo <span id="tempoLabel">75%</span><input id="tempoFactor" type="range" min="0.5" max="1.15" step="0.05" value="0.75"></label><label><span>Metronome click</span><input id="clickTrack" type="checkbox" checked style="width:auto;justify-self:start"></label>
+    </div>
+    <p class="hint"><b>Offline practice:</b> open this page while online once so the trainer can be saved for offline use. Allow microphone access when you start practicing.</p>
+    <p class="hint"><b>Phone:</b> use your browser’s Install app command, or Safari’s Share → Add to Home Screen. Your progress stays in this browser on this device.</p>
+    <p class="privacy">Privacy: microphone samples are processed only in JavaScript on this device. Nothing is recorded, stored, or transmitted.</p>
+  </details>
+</section>
+</div>
+</div>
+
+<div id="installModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="installModalTitle" aria-hidden="true">
+  <div class="install-modal">
+    <div class="row between">
+      <h2 id="installModalTitle">Install Sax Coach</h2>
+      <button id="closeInstallModal" type="button" aria-label="Close installation instructions">Close</button>
+    </div>
+    <div id="installModalBody"></div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+const $ = id => document.getElementById(id);
+const NAMES = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const PC = {C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+const fmt = n => n.replace('b','♭').replace('#','♯');
+const fmtNote = midi => `${fmt(NAMES[(midi%12+12)%12])}${Math.floor(midi/12)-1}`;
+const midiFromFreq = f => 69 + 12*Math.log2(f/440);
+const freqFromMidi = m => 440*Math.pow(2,(m-69)/12);
+const refMidiFor = n => 48 + PC[n];
+const writtenName = concertPc => NAMES[(concertPc + 2) % 12];
+const centsToTargetPc = (midiFloat, pc) => {
+  let nearest = Math.round((midiFloat - pc)/12)*12 + pc;
+  return {cents:100*(midiFloat-nearest), nearest};
+};
+
+const MIXO = root => {
+  const major = [0,2,4,5,7,9,10];
+  return major.map(x => NAMES[(PC[root]+x)%12]);
+};
+const DORIAN = root => {
+  const ints = [0,2,3,5,7,9,10];
+  return ints.map(x => NAMES[(PC[root]+x)%12]);
+};
+const MINOR = root => {
+  const ints = [0,2,3,5,7,8,10];
+  return ints.map(x => NAMES[(PC[root]+x)%12]);
+};
+const MAJOR = root => {
+  const ints = [0,2,4,5,7,9,11];
+  return ints.map(x => NAMES[(PC[root]+x)%12]);
+};
+const BLUES = root => {
+  const ints = [0,3,5,6,7,10];
+  return ints.map(x => NAMES[(PC[root]+x)%12]);
+};
+
+// Standard tenor fingerings for the comfortable written D4-C#5 register.
+// The user sees concert pitch first; these are the corresponding written notes.
+const FINGERINGS = {
+  2:[{label:'Standard D',left:[1,1,1],right:[1,1,1],extras:[],desc:'All six main fingers down. No octave key in this register.'}],
+  3:[{label:'Standard E♭',left:[1,1,1],right:[1,1,1],extras:['RH pinky E♭'],desc:'All six main fingers + the right-hand E♭ pinky key.'}],
+  4:[{label:'Standard E',left:[1,1,1],right:[1,1,0],extras:[],desc:'LH 1-2-3 + RH index and middle.'}],
+  5:[{label:'Standard F',left:[1,1,1],right:[1,0,0],extras:[],desc:'LH 1-2-3 + RH index.'}],
+  6:[{label:'Standard F♯',left:[1,1,1],right:[0,1,0],extras:[],desc:'LH 1-2-3 + RH middle.'}],
+  7:[{label:'Standard G',left:[1,1,1],right:[0,0,0],extras:[],desc:'LH 1-2-3 only.'}],
+  8:[{label:'Standard A♭',left:[1,1,1],right:[0,0,0],extras:['LH pinky G♯'],desc:'LH 1-2-3 + left-pinky G♯/A♭ key.'}],
+  9:[{label:'Standard A',left:[1,1,0],right:[0,0,0],extras:[],desc:'LH index + middle.'}],
+  10:[
+    {label:'Bis B♭',left:[1,0,0],right:[0,0,0],extras:['Bis key'],desc:'LH index closes B and the small bis key together. Usually the smoothest B♭ for scalar playing.'},
+    {label:'Side B♭',left:[1,1,0],right:[0,0,0],extras:['RH side B♭'],desc:'A fingering + right-hand side B♭. Useful around B/B♭.'},
+    {label:'1+1 B♭',left:[1,0,0],right:[1,0,0],extras:[],desc:'LH index + RH index. Convenient in some passages; intonation varies by horn.'}
+  ],
+  11:[{label:'Standard B',left:[1,0,0],right:[0,0,0],extras:[],desc:'LH index only.'}],
+  0:[
+    {label:'Standard C',left:[0,1,0],right:[0,0,0],extras:[],desc:'LH middle finger only.'},
+    {label:'Side C',left:[1,0,0],right:[0,0,0],extras:['RH side C'],desc:'B fingering + side C key. Useful for B↔C.'}
+  ],
+  1:[{label:'Standard C♯',left:[0,0,0],right:[0,0,0],extras:[],desc:'Open fingering in this register.'}]
+};
+
+const TUNES = {
+  equinox:{
+    name:'Equinox', tag:'C minor blues · dark + spacious', home:'C', bpm:110,
+    concept:'Home base: concert C minor pentatonic/blues. Make the hand map automatic, then leave space.',
+    exercises:[
+      {id:'lock',name:'1 · Five-note lock',desc:'C, E♭, F, G, B♭. Hold each until it centers.',notes:['C','Eb','F','G','Bb'],hold:900},
+      {id:'pent',name:'2 · Minor pentatonic ladder',desc:'Up and down without translating.',notes:['C','Eb','F','G','Bb','G','F','Eb','C'],hold:650},
+      {id:'anchor',name:'3 · C-anchor transitions',desc:'Return to C after every new hand shape.',notes:['C','Eb','C','F','C','G','C','Bb','C'],hold:550},
+      {id:'gesture',name:'4 · Equinox-world gesture',desc:'A simple vocabulary cell: not the composed head, but immediately in its sound-world.',notes:['C','Eb','F','G','F','Eb','C'],hold:430},
+      {id:'blue',name:'5 · Blues hinge',desc:'Install the color note F → G♭ → G and reverse it.',notes:['F','Gb','G','Gb','F','F','Gb','G'],hold:560},
+      {id:'vocab',name:'6 · Full six-note vocabulary',desc:'C minor blues vocabulary and back.',notes:['C','Eb','F','Gb','G','Bb','G','Gb','F','Eb','C'],hold:410},
+      {id:'improv',name:'7 · 30-second response',desc:'Improvise freely; stay mostly inside the six-note vocabulary.',mode:'improv',duration:30000,allowed:BLUES('C')}
+    ]
+  },
+  mrpc:{
+    name:'Mr. P.C.', tag:'C minor blues · faster + riff-like', home:'C', bpm:150,
+    concept:'Same C-minor/blues home as Equinox, but make the vocabulary more rhythmic and decisive.',
+    exercises:[
+      {id:'map',name:'1 · Reuse the Equinox map',desc:'C minor pentatonic, now with quicker locks.',notes:['C','Eb','F','G','Bb','G','F','Eb','C'],hold:420},
+      {id:'blue',name:'2 · Blues-note reflex',desc:'Hit G♭ cleanly without searching.',notes:['F','Gb','G','Bb','G','Gb','F','Eb','C'],hold:380},
+      {id:'thirds',name:'3 · Minor-third anchors',desc:'Hear and feel C↔E♭ and F↔A♭.',notes:['C','Eb','C','Eb','F','Ab','F','Ab'],hold:420},
+      {id:'roots',name:'4 · Blues root map',desc:'Feel I, IV and V roots instead of only one scale.',notes:['C','F','C','G','F','C'],hold:520},
+      {id:'form',name:'5 · 12-bar orientation',desc:'One slowed practice chorus. The screen changes harmonic area while the mic grades whether you remain in its usable vocabulary.',mode:'form',bpm:120,beatsPerBar:4,sections:[
+        {label:'I · C minor',root:'C',bars:4,allowed:BLUES('C')},
+        {label:'IV · F minor',root:'F',bars:2,allowed:BLUES('F')},
+        {label:'I · C minor',root:'C',bars:2,allowed:BLUES('C')},
+        {label:'V area',root:'G',bars:1,allowed:BLUES('G')},
+        {label:'IV · F minor',root:'F',bars:1,allowed:BLUES('F')},
+        {label:'I · C minor',root:'C',bars:2,allowed:BLUES('C')}
+      ]},
+      {id:'improv',name:'6 · 30-second riff response',desc:'Short phrases, rests, repeat and vary.',mode:'improv',duration:30000,allowed:BLUES('C')}
+    ]
+  },
+  impressions:{
+    name:'Impressions', tag:'D Dorian ↔ E♭ Dorian · modal', home:'D', bpm:170,
+    concept:'You already know D Dorian. The whole beginner problem is: live in D Dorian, then move the same idea up one semitone to E♭ Dorian, then come home.',
+    exercises:[
+      {id:'dmap',name:'1 · D Dorian map',desc:'Concert D E F G A B C.',notes:['D','E','F','G','A','B','C','B','A','G','F','E','D'],hold:330},
+      {id:'dcell',name:'2 · Dorian identity tones',desc:'Root, minor 3rd, 6th, flat 7th: D F B C.',notes:['D','F','B','C','B','F','D'],hold:430},
+      {id:'ebmap',name:'3 · E♭ Dorian map',desc:'Same geometry a half-step up: E♭ F G♭ A♭ B♭ C D♭.',notes:['Eb','F','Gb','Ab','Bb','C','Db','C','Bb','Ab','Gb','F','Eb'],hold:330},
+      {id:'shift',name:'4 · Half-step world switch',desc:'Keep the phrase shape; move the center D ↔ E♭.',notes:['D','F','G','A','D','Eb','Gb','Ab','Bb','Eb','D'],hold:390},
+      {id:'form',name:'5 · 32-bar form',desc:'16 bars D Dorian → 8 bars E♭ Dorian → 8 bars D Dorian. This is the keep-your-place drill.',mode:'form',bpm:120,beatsPerBar:4,sections:[
+        {label:'A1+A2 · D Dorian',root:'D',bars:16,allowed:DORIAN('D')},
+        {label:'B · E♭ Dorian',root:'Eb',bars:8,allowed:DORIAN('Eb')},
+        {label:'A3 · D Dorian',root:'D',bars:8,allowed:DORIAN('D')}
+      ]},
+      {id:'improv',name:'6 · D-Dorian free response',desc:'First become fluent in the home mode before chasing the bridge.',mode:'improv',duration:30000,allowed:DORIAN('D')}
+    ]
+  },
+  bluetrain:{
+    name:'Blue Train', tag:'E♭ dominant blues · hard bop', home:'Eb', bpm:120,
+    concept:'Treat it first as an E♭ blues. Add the tension between the blues minor-third color (G♭) and the dominant/major-third color (G).',
+    exercises:[
+      {id:'blues',name:'1 · E♭ blues map',desc:'E♭ G♭ A♭ A B♭ D♭.',notes:BLUES('Eb').concat(['Bb','Ab','Gb','Eb']),hold:390},
+      {id:'third',name:'2 · Minor/major-third hinge',desc:'G♭ → G is one of the sounds that makes dominant blues richer.',notes:['Eb','Gb','G','Bb','G','Gb','Eb'],hold:470},
+      {id:'roots',name:'3 · I–IV–V roots',desc:'E♭ → A♭ → B♭ and home.',notes:['Eb','Ab','Eb','Bb','Ab','Eb'],hold:520},
+      {id:'mix',name:'4 · Dominant color',desc:'E♭ Mixolydian, emphasizing G and D♭.',notes:['Eb','F','G','Ab','Bb','C','Db','C','Bb','G','Eb'],hold:330},
+      {id:'form',name:'5 · 12-bar Blue Train form',desc:'The recorded solo chorus: E♭7 | A♭7 | E♭7 E♭7 | A♭7 A♭7 | E♭7 | C7 | Fm7 | B♭7 | E♭7 E♭7.',mode:'form',bpm:105,beatsPerBar:4,sections:[
+        {label:'bar 1 · E♭7',root:'Eb',bars:1,allowed:MIXO('Eb')},
+        {label:'bar 2 · A♭7',root:'Ab',bars:1,allowed:MIXO('Ab')},
+        {label:'bars 3–4 · E♭7',root:'Eb',bars:2,allowed:MIXO('Eb')},
+        {label:'bars 5–6 · A♭7',root:'Ab',bars:2,allowed:MIXO('Ab')},
+        {label:'bar 7 · E♭7',root:'Eb',bars:1,allowed:MIXO('Eb')},
+        {label:'bar 8 · C7',root:'C',bars:1,allowed:MIXO('C')},
+        {label:'bar 9 · Fm7',root:'F',bars:1,allowed:DORIAN('F')},
+        {label:'bar 10 · B♭7',root:'Bb',bars:1,allowed:MIXO('Bb')},
+        {label:'bars 11–12 · E♭7',root:'Eb',bars:2,allowed:MIXO('Eb')}
+      ]},
+      {id:'improv',name:'6 · 30-second E♭ blues',desc:'Mix blues-scale color with G natural when your ear wants the dominant sound.',mode:'improv',duration:30000,allowed:Array.from(new Set([...BLUES('Eb'),'G','C']))}
+    ]
+  },
+  cousinmary:{
+    name:'Cousin Mary', tag:'A♭ blues · tritone-sub twist', home:'Ab', bpm:145,
+    concept:'A very learnable 12-bar A♭ blues, with a useful ear-training surprise: D7 pushes into D♭7 near the end of the form.',
+    exercises:[
+      {id:'blues',name:'1 · A♭ blues map',desc:'A♭ B D♭ D E♭ G♭.',notes:BLUES('Ab').concat(['Eb','Db','B','Ab']),hold:400},
+      {id:'major3',name:'2 · Dominant third',desc:'Add C natural so A♭7 sounds like dominant blues, not only minor pentatonic.',notes:['Ab','B','C','Db','Eb','C','Ab'],hold:470},
+      {id:'roots',name:'3 · I / IV roots',desc:'A♭ and D♭ must feel like places, not random notes.',notes:['Ab','Db','Ab','Db','Ab'],hold:600},
+      {id:'sub',name:'4 · The D7 → D♭7 surprise',desc:'Train the half-step root resolution D → D♭ → A♭.',notes:['Ab','D','Db','Ab','D','Db','Ab'],hold:500},
+      {id:'form',name:'5 · Actual 12-bar skeleton',desc:'4 A♭7 · 2 D♭7 · 2 A♭7 · 1 D7 · 1 D♭7 · 2 A♭7.',mode:'form',bpm:110,beatsPerBar:4,sections:[
+        {label:'I · A♭7',root:'Ab',bars:4,allowed:MIXO('Ab')},
+        {label:'IV · D♭7',root:'Db',bars:2,allowed:MIXO('Db')},
+        {label:'I · A♭7',root:'Ab',bars:2,allowed:MIXO('Ab')},
+        {label:'subV · D7',root:'D',bars:1,allowed:MIXO('D')},
+        {label:'IV · D♭7',root:'Db',bars:1,allowed:MIXO('Db')},
+        {label:'I · A♭7',root:'Ab',bars:2,allowed:MIXO('Ab')}
+      ]},
+      {id:'improv',name:'6 · A♭ blues response',desc:'Stay simple enough that you can hear the form prompt changing underneath.',mode:'improv',duration:30000,allowed:Array.from(new Set([...BLUES('Ab'),'C']))}
+    ]
+  },
+  syeeda:{
+    name:"Syeeda's Song Flute", tag:'chromatic dominant cells · playful', home:'G', bpm:150,
+    concept:'Use it to become comfortable moving a simple hand-shape by half-step and hearing dominant colors, rather than trying to memorize the whole head at once.',
+    exercises:[
+      {id:'gdom',name:'1 · G dominant map',desc:'G Mixolydian: G A B C D E F.',notes:['G','A','B','C','D','E','F','E','D','C','B','A','G'],hold:330},
+      {id:'abdom',name:'2 · A♭ dominant map',desc:'Move the world a half-step: A♭ B♭ C D♭ E♭ F G♭.',notes:['Ab','Bb','C','Db','Eb','F','Gb','F','Eb','Db','C','Bb','Ab'],hold:330},
+      {id:'toggle',name:'3 · G ↔ A♭ reflex',desc:'Root and third shapes across the half-step.',notes:['G','Ab','G','Ab','B','C','B','C','G'],hold:400},
+      {id:'desc',name:'4 · Chromatic dominant descent',desc:'A fingering drill that prepares the tune’s chromatic dominant language.',notes:['G','Gb','F','E','Eb','D','G'],hold:400},
+      {id:'minorcolor',name:'5 · G-minor color',desc:'Switch from dominant brightness into G minor pentatonic.',notes:['G','Bb','C','D','F','D','C','Bb','G'],hold:390},
+      {id:'improv',name:'6 · Cell-and-answer',desc:'Improvise with G minor pentatonic plus A♭ as a deliberate neighbor.',mode:'improv',duration:30000,allowed:['G','Ab','Bb','C','D','F']}
+    ]
+  },
+  naima:{
+    name:'Naima', tag:'ballad · pedal tones + intonation', home:'Eb', bpm:65,
+    concept:'Do not attack the harmony first. Learn to sound beautiful and stable around the two pedal centers: E♭ outside sections and B♭ in the middle.',
+    exercises:[
+      {id:'ebpedal',name:'1 · E♭ center',desc:'Long, stable tones around E♭. Listen for gravity back to the pedal.',notes:['Eb','Bb','Eb','F','Ab','Eb'],hold:900},
+      {id:'bbpedal',name:'2 · B♭ center',desc:'Reorient your ear around B♭ without rushing.',notes:['Bb','F','Bb','Db','F','Bb'],hold:900},
+      {id:'suspend',name:'3 · Suspended color',desc:'Fourth/fifth/flat-seventh colors without needing to name every chord.',notes:['Eb','Ab','Bb','Db','Bb','Ab','Eb'],hold:700},
+      {id:'switch',name:'4 · Pedal-center switch',desc:'Hear the large-scale motion E♭ → B♭ → E♭.',notes:['Eb','Ab','Eb','Bb','F','Bb','Eb'],hold:800},
+      {id:'tone',name:'5 · Ballad intonation test',desc:'Very slow targets: aim for <12¢ and a stable center.',notes:['Eb','G','Bb','Db','C','Ab','Eb'],hold:1200},
+      {id:'improv',name:'6 · Sparse ballad response',desc:'Play fewer notes. Grade pitch stability, not harmonic cleverness.',mode:'improv',duration:30000,allowed:['Eb','F','G','Ab','Bb','C','Db']}
+    ]
+  },
+  afroblue:{
+    name:'Afro Blue', tag:'F minor · 3/4 pulse', home:'F', bpm:100,
+    concept:'Use a compact F-minor vocabulary, but feel every idea in groups of three. The note choices can stay simple while the pulse becomes automatic.',
+    exercises:[
+      {id:'pent',name:'1 · F minor pentatonic',desc:'F A♭ B♭ C E♭.',notes:['F','Ab','Bb','C','Eb','C','Bb','Ab','F'],hold:430},
+      {id:'minor',name:'2 · F natural minor',desc:'Add G and D♭.',notes:['F','G','Ab','Bb','C','Db','Eb','Db','C','Bb','Ab','G','F'],hold:350},
+      {id:'triples',name:'3 · Three-note cells',desc:'Think 1-2-3 / 1-2-3 rather than a long scale.',notes:['F','Ab','C','Ab','Bb','Db','C','Eb','F'],hold:360},
+      {id:'roots',name:'4 · F ↔ B♭ minor centers',desc:'Hear tonic and subdominant as distinct homes.',notes:['F','Bb','F','Bb','F'],hold:620},
+      {id:'form',name:'5 · 3/4 modal practice loop',desc:'A deliberately simplified F-minor/B♭-minor practice loop for keeping triple-meter orientation; not a transcription of the chart.',mode:'form',bpm:90,beatsPerBar:3,sections:[
+        {label:'F minor color',root:'F',bars:8,allowed:MINOR('F')},
+        {label:'B♭ minor color',root:'Bb',bars:4,allowed:MINOR('Bb')},
+        {label:'F minor color',root:'F',bars:4,allowed:MINOR('F')}
+      ]},
+      {id:'improv',name:'6 · 30-second 3/4 response',desc:'Use very small F-minor cells; let the metronome establish the three-beat feel.',mode:'improv',duration:30000,allowed:MINOR('F')}
+    ]
+  },
+  favorites:{
+    name:'My Favorite Things', tag:'E minor ↔ E major modal color', home:'E', bpm:132,
+    concept:'Coltrane’s modal treatment gives you a beautiful binary ear exercise: the same E center can sound minor or major. Train the notes that flip the color.',
+    exercises:[
+      {id:'emin',name:'1 · E minor map',desc:'E F♯ G A B C D.',notes:['E','Gb','G','A','B','C','D','C','B','A','G','Gb','E'],hold:340},
+      {id:'emaj',name:'2 · E major map',desc:'E F♯ G♯ A B C♯ D♯.',notes:['E','F#','G#','A','B','C#','D#','C#','B','A','G#','F#','E'],hold:340},
+      {id:'third',name:'3 · Color switch: G ↔ G♯',desc:'The third changes the emotional identity immediately.',notes:['E','G','E','G#','E','G','G#','G','E'],hold:470},
+      {id:'seventh',name:'4 · Color switch: D ↔ D♯',desc:'Hear the seventh changing around the same E pedal.',notes:['E','D','E','D#','E','D','D#','E'],hold:470},
+      {id:'form',name:'5 · Minor/major vamp switch',desc:'A practice vamp: 8 bars E minor → 8 bars E major → repeat once. This trains the modal color change, not the composed form.',mode:'form',bpm:105,beatsPerBar:3,sections:[
+        {label:'E minor color',root:'E',bars:8,allowed:MINOR('E')},
+        {label:'E major color',root:'E',bars:8,allowed:['E','F#','G#','A','B','C#','D#']},
+        {label:'E minor color',root:'E',bars:8,allowed:MINOR('E')},
+        {label:'E major color',root:'E',bars:8,allowed:['E','F#','G#','A','B','C#','D#']}
+      ]},
+      {id:'improv',name:'6 · E-minor response',desc:'First make the minor vamp effortless; then repeat the exercise using the major map.',mode:'improv',duration:30000,allowed:MINOR('E')}
+    ]
+  }
+};
+
+const ORDER = ['equinox','mrpc','impressions','bluetrain','cousinmary','syeeda','naima','afroblue','favorites'];
+
+let tuneId = localStorage.getItem('coltraneCoachTune') || 'equinox';
+if(!TUNES[tuneId]) tuneId='equinox';
+let exIndex=0, stepIndex=0, running=false, holdMs=0, lastTick=0, variantIndex=0;
+let audioCtx=null, analyser=null, source=null, stream=null, timeBuf=null, detectTimer=null;
+let micOn=false, ignoreUntil=0, recentMidi=[];
+let tolerance=35, rmsThreshold=.013, tempoFactor=.75;
+let stepErrors=[], allErrors=[], wrongFrames=0, totalFrames=0;
+let improvStart=0, improvAllowed=0, improvDetected=0;
+let formStart=0, formAllowed=0, formDetected=0, lastFormSection=-1;
+let clickTimer=null, clickBeat=0;
+let best = JSON.parse(localStorage.getItem('coltraneCoachBest') || '{}');
+let completed = JSON.parse(localStorage.getItem('coltraneCoachDone') || '{}');
+
+const tune = () => TUNES[tuneId];
+const EX = () => tune().exercises;
+const currentExercise = () => EX()[exIndex];
+
+function progressKey(ex=currentExercise()){ return `${tuneId}:${ex.id}`; }
+function formTotalBars(ex){ return ex.sections.reduce((a,s)=>a+s.bars,0); }
+function effectiveBpm(ex){ return Math.max(35,(ex.bpm || tune().bpm || 100)*tempoFactor); }
+function formDuration(ex){ return formTotalBars(ex)*(ex.beatsPerBar||4)*60000/effectiveBpm(ex); }
+
+function formPosition(ex=currentExercise()){
+  if(ex.mode!=='form') return null;
+  const totalBars=formTotalBars(ex);
+  const beatMs=60000/effectiveBpm(ex), barMs=beatMs*(ex.beatsPerBar||4);
+  const elapsed=Math.max(0,performance.now()-formStart);
+  let bar=Math.min(totalBars-1,Math.floor(elapsed/barMs));
+  let accum=0, idx=0;
+  for(let i=0;i<ex.sections.length;i++){
+    if(bar < accum+ex.sections[i].bars){idx=i;break;}
+    accum += ex.sections[i].bars;
+  }
+  const sec=ex.sections[idx];
+  return {idx,sec,bar,barInSection:bar-accum,elapsed,totalBars,barMs};
+}
+
+function targetName(){
+  const ex=currentExercise();
+  if(ex.mode==='improv') return tune().home;
+  if(ex.mode==='form'){
+    const p=running ? formPosition(ex) : null;
+    return (p ? p.sec.root : ex.sections[0].root) || tune().home;
+  }
+  return ex.notes[Math.min(stepIndex,ex.notes.length-1)];
+}
+const targetPc = () => PC[targetName()];
+
+function setupTuneControls(){
+  const sel=$('tuneSelect'); sel.innerHTML='';
+  ORDER.forEach(id=>{
+    const o=document.createElement('option'); o.value=id; o.textContent=TUNES[id].name;
+    if(id===tuneId)o.selected=true; sel.appendChild(o);
+  });
+  sel.onchange=()=>selectTune(sel.value);
+  renderCurriculum();
+}
+
+function renderCurriculum(){
+  const box=$('curriculum');box.innerHTML='';
+  ORDER.forEach((id,i)=>{
+    const b=document.createElement('button'); b.textContent=`${i+1}. ${TUNES[id].name}`;
+    if(id===tuneId)b.classList.add('active');
+    b.onclick=()=>selectTune(id); box.appendChild(b);
+  });
+}
+
+function selectTune(id){
+  if(!TUNES[id]) return;
+  stopClick();
+  tuneId=id; localStorage.setItem('coltraneCoachTune',id);
+  exIndex=0; stepIndex=0; resetExercise(false); setupTuneControls(); renderAll();
+}
+
+function renderTuneInfo(){
+  $('tuneInfo').innerHTML=`<b>${tune().name}</b> <span class="hint">· ${tune().tag}</span><div class="concept">${tune().concept}</div>`;
+  $('progressTitle').textContent=`Build ${tune().name}`;
+}
+
+function renderExercises(){
+  $('exerciseList').innerHTML='';
+  EX().forEach((ex,i)=>{
+    const done=completed[`${tuneId}:${ex.id}`];
+    const d=document.createElement('div');
+    d.className='ex'+(i===exIndex?' active':'')+(done?' done':'');
+    d.innerHTML=`<b>${ex.name}</b><small>${ex.desc}</small>`;
+    d.onclick=()=>{stopClick();exIndex=i;resetExercise(false);renderAll();};
+    $('exerciseList').appendChild(d);
+  });
+  const n=EX().filter(x=>completed[`${tuneId}:${x.id}`]).length;
+  $('progressCount').textContent=`${n} / ${EX().length}`;
+}
+
+function renderSequence(){
+  const ex=currentExercise(), box=$('sequence'); box.innerHTML='';
+  if(ex.mode==='improv'){
+    ex.allowed.forEach(n=>{const s=document.createElement('span');s.className='step';s.textContent=fmt(n);box.appendChild(s)});
+  } else if(ex.mode==='form'){
+    const p=running?formPosition(ex):null;
+    ex.sections.forEach((sec,i)=>{
+      const s=document.createElement('span');
+      s.className='step'+(p&&i<p.idx?' ok':'')+(p&&i===p.idx?' now':'');
+      s.textContent=`${sec.label} · ${sec.bars}b`;
+      box.appendChild(s);
+    });
+  } else {
+    ex.notes.forEach((n,i)=>{
+      const s=document.createElement('span');
+      s.className='step'+(i<stepIndex?' ok':'')+(i===stepIndex?' now':'');
+      s.textContent=fmt(n);box.appendChild(s)
+    });
+  }
+}
+
+function renderTarget(){
+  const n=targetName();
+  $('targetNote').textContent=fmt(n);
+  if(currentExercise().mode==='form'){
+    const p=running?formPosition():null, sec=p?p.sec:currentExercise().sections[0];
+    $('writtenTarget').textContent=`form center: ${sec.label} · root ${fmt(n)} · tenor written ${fmt(writtenName(PC[n]))}`;
+  } else {
+    $('writtenTarget').textContent=`tenor fingering: written ${fmt(writtenName(PC[n]))} · sounding target around ${fmtNote(refMidiFor(n))}`;
+  }
+  renderFingering();
+}
+
+function renderFingering(){
+  const wpc=(targetPc()+2)%12, variants=FINGERINGS[wpc] || [];
+  if(!variants.length)return;
+  variantIndex=Math.min(variantIndex,variants.length-1);
+  const v=variants[variantIndex];
+  ['L1','L2','L3'].forEach((id,i)=>$(id).classList.toggle('down',!!v.left[i]));
+  ['R1','R2','R3'].forEach((id,i)=>$(id).classList.toggle('down',!!v.right[i]));
+  $('fingerTitle').textContent=v.label; $('fingerDesc').textContent=v.desc;
+  $('extras').innerHTML='';
+  const base=document.createElement('span');base.className='extra';base.textContent='Octave key: OFF';$('extras').appendChild(base);
+  v.extras.forEach(x=>{const e=document.createElement('span');e.className='extra on';e.textContent=x;$('extras').appendChild(e)});
+  $('alts').innerHTML='';
+  if(variants.length>1){
+    variants.forEach((x,i)=>{
+      const b=document.createElement('button');b.textContent=x.label;
+      b.className=i===variantIndex?'primary':'';
+      b.onclick=()=>{variantIndex=i;renderFingering()};
+      $('alts').appendChild(b)
+    })
+  }
+}
+
+function renderFormStatus(){
+  const ex=currentExercise(), fs=$('formStatus');
+  if(ex.mode!=='form'){fs.style.display='none';return;}
+  fs.style.display='block';
+  if(!running){
+    fs.innerHTML=`Timed form · ${Math.round(effectiveBpm(ex))} BPM · ${ex.beatsPerBar||4}/4 · ${formTotalBars(ex)} bars`;
+    return;
+  }
+  const p=formPosition(ex);
+  const beatMs=60000/effectiveBpm(ex);
+  const beat=(Math.floor(p.elapsed/beatMs)%(ex.beatsPerBar||4))+1;
+  fs.innerHTML=`<b>Bar ${p.bar+1}/${p.totalBars}</b> · beat ${beat}/${ex.beatsPerBar||4} · ${p.sec.label} · section bar ${p.barInSection+1}/${p.sec.bars}`;
+}
+
+function renderAll(){
+  renderTuneInfo();
+  $('exerciseName').textContent=currentExercise().name;
+  $('exerciseDesc').textContent=currentExercise().desc;
+  const b=best[progressKey()];
+  $('bestStat').textContent=b ? Math.round(b) : '—';
+  renderTarget(); renderSequence(); renderExercises(); renderCurriculum(); renderFormStatus(); updateHold();
+}
+
+function resetExercise(start=false){
+  stopClick();
+  stepIndex=0;holdMs=0;variantIndex=0;running=start;stepErrors=[];allErrors=[];wrongFrames=0;totalFrames=0;
+  improvStart = start && currentExercise().mode==='improv' ? performance.now() : 0;
+  improvAllowed=0;improvDetected=0;formAllowed=0;formDetected=0;lastFormSection=-1;
+  formStart = start && currentExercise().mode==='form' ? performance.now() : 0;
+  $('sessionScore').textContent='—';$('pitchStat').textContent='—';
+  if(start){
+    if(currentExercise().mode==='improv') setFeedback('Play freely. The mic grades whether you stay in the displayed vocabulary.','warn');
+    else if(currentExercise().mode==='form') setFeedback('Form running. Keep your ear on the changing harmonic area and the bar counter.','warn');
+    else setFeedback('Play the target and hold it steadily.','warn');
+  }
+}
+
+function startExercise(){
+  resetExercise(true);lastTick=performance.now();
+  if(currentExercise().mode==='form' && $('clickTrack').checked) startClick();
+  renderAll();
+}
+function skipNote(){const ex=currentExercise();if(ex.mode==='improv'||ex.mode==='form')return;completeStep(false);}
+
+function updateHold(){
+  const ex=currentExercise();let pct=0;
+  if(ex.mode==='improv'&&running)pct=Math.min(100,100*(performance.now()-improvStart)/ex.duration);
+  else if(ex.mode==='form'&&running)pct=Math.min(100,100*(performance.now()-formStart)/formDuration(ex));
+  else pct=Math.min(100,100*holdMs/(ex.hold||700));
+  $('holdFill').style.width=pct+'%';
+}
+
+function setFeedback(msg,kind=''){$('feedback').textContent=msg;$('feedback').className='feedback '+kind;}
+
+function scoreNow(){
+  const ex=currentExercise();
+  if(ex.mode==='improv'){
+    const vocab=improvDetected?improvAllowed/improvDetected:0;
+    const tuneScore=allErrors.length?Math.max(0,1-(allErrors.reduce((a,b)=>a+Math.abs(b),0)/allErrors.length)/50):0;
+    return Math.round(100*(.8*vocab+.2*tuneScore));
+  }
+  if(ex.mode==='form'){
+    const vocab=formDetected?formAllowed/formDetected:0;
+    const tuneScore=allErrors.length?Math.max(0,1-(allErrors.reduce((a,b)=>a+Math.abs(b),0)/allErrors.length)/50):0;
+    return Math.round(100*(.82*vocab+.18*tuneScore));
+  }
+  const meanErr=allErrors.length?allErrors.reduce((a,b)=>a+Math.abs(b),0)/allErrors.length:50;
+  const pitch=Math.max(0,1-meanErr/50), accuracy=totalFrames?Math.max(0,1-wrongFrames/totalFrames):0;
+  return Math.round(100*(.72*pitch+.28*accuracy));
+}
+
+function finishExercise(){
+  stopClick();running=false;const ex=currentExercise(),score=scoreNow();
+  $('sessionScore').textContent=score;
+  const mean=allErrors.length?allErrors.reduce((a,b)=>a+Math.abs(b),0)/allErrors.length:null;
+  $('pitchStat').textContent=mean==null?'—':`${Math.round(mean)}¢`;
+  const k=progressKey(ex);best[k]=Math.max(best[k]||0,score);completed[k]=true;
+  localStorage.setItem('coltraneCoachBest',JSON.stringify(best));localStorage.setItem('coltraneCoachDone',JSON.stringify(completed));
+  $('bestStat').textContent=Math.round(best[k]);
+  setFeedback(score>=85?`Complete — ${score}/100. Solid.`:score>=65?`Complete — ${score}/100. Repeat and make the centers/form changes cleaner.`:`Complete — ${score}/100. Slow down and simplify.`,score>=85?'good':'warn');
+  renderAll();
+}
+
+function completeStep(count=true){
+  const ex=currentExercise();
+  if(count&&stepErrors.length)allErrors.push(...stepErrors);
+  stepErrors=[];holdMs=0;variantIndex=0;stepIndex++;
+  if(stepIndex>=ex.notes.length){stepIndex=ex.notes.length-1;finishExercise();}
+  else{renderTarget();renderSequence();updateHold();}
+}
+
+async function startMic(){
+  if(micOn){stopMic();return;}
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}})
+      .catch(()=>navigator.mediaDevices.getUserMedia({audio:true}));
+    audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();
+    analyser=audioCtx.createAnalyser();analyser.fftSize=2048;analyser.smoothingTimeConstant=0;
+    source=audioCtx.createMediaStreamSource(stream);source.connect(analyser);timeBuf=new Float32Array(analyser.fftSize);
+    micOn=true;$('micDot').classList.add('on');$('micStatus').textContent='Mic live';$('micBtn').textContent='Stop microphone';
+    detectTimer=setInterval(detectPitch,65);setFeedback('Mic live. Play the displayed target or start an exercise.','warn');
+  }catch(e){setFeedback('Microphone permission failed. Try localhost/HTTPS and allow microphone access.','bad');}
+}
+
+function stopMic(){
+  if(detectTimer)clearInterval(detectTimer);detectTimer=null;
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  stream=null;source=null;analyser=null;micOn=false;
+  $('micDot').classList.remove('on');$('micStatus').textContent='Mic off';$('micBtn').textContent='Start microphone';
+  $('heardNote').textContent='—';$('heardDetails').textContent='Play a note';
+}
+
+function estimatePitch(buf,sr){
+  let rms=0;for(let i=0;i<buf.length;i++)rms+=buf[i]*buf[i];rms=Math.sqrt(rms/buf.length);
+  if(rms<rmsThreshold)return null;
+  const minLag=Math.floor(sr/1000),maxLag=Math.min(Math.floor(sr/75),buf.length-2);
+  let bestLag=-1,best=-1;const n=Math.min(1200,buf.length-maxLag-1);
+  for(let lag=minLag;lag<=maxLag;lag++){
+    let ac=0,e1=0,e2=0;
+    for(let i=0;i<n;i++){const a=buf[i],b=buf[i+lag];ac+=a*b;e1+=a*a;e2+=b*b;}
+    const c=ac/(Math.sqrt(e1*e2)+1e-12);
+    if(c>best){best=c;bestLag=lag;}
+  }
+  if(bestLag<0||best<.55)return null;
+  const corrAt=lag=>{let ac=0,e1=0,e2=0;for(let i=0;i<n;i++){const a=buf[i],b=buf[i+lag];ac+=a*b;e1+=a*a;e2+=b*b;}return ac/(Math.sqrt(e1*e2)+1e-12)};
+  let lag=bestLag;
+  if(bestLag>minLag&&bestLag<maxLag){
+    const y1=corrAt(bestLag-1),y2=best,y3=corrAt(bestLag+1),den=(y1-2*y2+y3);
+    if(Math.abs(den)>1e-6)lag=bestLag+.5*(y1-y3)/den;
+  }
+  return {freq:sr/lag,clarity:best,rms};
+}
+function median(a){const x=[...a].sort((p,q)=>p-q),m=Math.floor(x.length/2);return x.length%2?x[m]:(x[m-1]+x[m])/2;}
+
+function detectPitch(){
+  if(!analyser||performance.now()<ignoreUntil)return;
+  analyser.getFloatTimeDomainData(timeBuf);
+  const est=estimatePitch(timeBuf,audioCtx.sampleRate),now=performance.now(),dt=Math.min(130,now-(lastTick||now));lastTick=now;
+
+  if(running&&currentExercise().mode==='form'){
+    const p=formPosition();
+    if(p.idx!==lastFormSection){lastFormSection=p.idx;variantIndex=0;renderTarget();renderSequence();}
+    renderFormStatus();updateHold();
+    if(p.elapsed>=formDuration(currentExercise())){finishExercise();return;}
+  }
+
+  if(!est){
+    recentMidi=[];$('heardNote').textContent='—';$('heardDetails').textContent='listening…';
+    if(running&&currentExercise().mode!=='improv'&&currentExercise().mode!=='form'){holdMs=Math.max(0,holdMs-dt*.7);updateHold();}
+    return;
+  }
+  let m=midiFromFreq(est.freq);recentMidi.push(m);if(recentMidi.length>5)recentMidi.shift();m=median(recentMidi);
+  const nearest=Math.round(m),name=NAMES[(nearest%12+12)%12],cents=Math.round(100*(m-nearest));
+  $('heardNote').textContent=fmt(name);$('heardDetails').textContent=`${fmtNote(nearest)} · ${Math.round(est.freq)} Hz · ${cents>0?'+':''}${cents}¢`;
+  const needle=Math.max(-50,Math.min(50,cents));$('needle').style.left=`calc(${50+needle*.68}% - 2px)`;
+  gradeFrame(m,dt);
+}
+
+function nearestAllowedError(m, allowed){
+  const pc=((Math.round(m)%12)+12)%12;
+  if(!allowed.map(x=>PC[x]).includes(pc)) return null;
+  return centsToTargetPc(m,pc).cents;
+}
+
+function gradeFrame(m,dt){
+  const ex=currentExercise(),heardPc=((Math.round(m)%12)+12)%12,heardName=NAMES[heardPc];
+
+  if(ex.mode==='improv'){
+    if(!running){setFeedback(`Heard ${fmt(heardName)}. Start the exercise when ready.`);return;}
+    improvDetected++;const inScale=ex.allowed.map(x=>PC[x]).includes(heardPc);if(inScale)improvAllowed++;
+    if(inScale){
+      const err=centsToTargetPc(m,heardPc).cents;allErrors.push(err);
+      setFeedback(`${fmt(heardName)} — inside the vocabulary${Math.abs(err)<=15?' and centered.':'.'}`,'good');
+    } else setFeedback(`${fmt(heardName)} is outside the current vocabulary. Resolve deliberately.`,'warn');
+    updateHold();if(performance.now()-improvStart>=ex.duration)finishExercise();return;
+  }
+
+  if(ex.mode==='form'){
+    if(!running){setFeedback(`Heard ${fmt(heardName)}. Start the form exercise when ready.`);return;}
+    const p=formPosition(ex),allowed=p.sec.allowed;
+    formDetected++;const inArea=allowed.map(x=>PC[x]).includes(heardPc);if(inArea)formAllowed++;
+    if(inArea){
+      const err=centsToTargetPc(m,heardPc).cents;allErrors.push(err);
+      setFeedback(`Bar ${p.bar+1}: ${fmt(heardName)} fits ${p.sec.label}.`,'good');
+    } else {
+      setFeedback(`Bar ${p.bar+1}: ${fmt(heardName)} is outside the simple ${p.sec.label} map. You may mean it—just know where you are.`,'warn');
+    }
+    renderFormStatus();updateHold();return;
+  }
+
+  const tpc=targetPc(),rel=centsToTargetPc(m,tpc),samePc=heardPc===tpc;
+  if(!running){
+    if(samePc)setFeedback(`That is the target ${fmt(targetName())}. Start the exercise to grade the hold.`,'good');
+    else setFeedback(`Heard ${fmt(heardName)}; target is ${fmt(targetName())}.`,'warn');
+    return;
+  }
+  totalFrames++;
+  if(!samePc){
+    wrongFrames++;holdMs=Math.max(0,holdMs-dt*1.2);
+    setFeedback(`You're on ${fmt(heardName)}; target ${fmt(targetName())}. Keep the concert name in your head.`,'bad');updateHold();return;
+  }
+  const err=rel.cents;stepErrors.push(err);
+  const recent=stepErrors.slice(-8),avg=recent.reduce((a,b)=>a+b,0)/recent.length;
+  const sd=Math.sqrt(recent.reduce((a,b)=>a+(b-avg)*(b-avg),0)/recent.length);
+  if(Math.abs(err)<=tolerance){
+    holdMs+=dt;
+    if(Math.abs(err)<=12&&sd<9)setFeedback('Centered + steady. Keep the air moving.','good');
+    else if(err>12)setFeedback('Right note — slightly sharp. Relax toward center.','warn');
+    else if(err<-12)setFeedback('Right note — slightly flat. Support and center it.','warn');
+    else setFeedback('Right note. Make the pitch less wobbly.','warn');
+  } else {
+    holdMs=Math.max(0,holdMs-dt*.5);
+    setFeedback(err>0?`Correct note, ${Math.round(err)}¢ sharp.`:`Correct note, ${Math.abs(Math.round(err))}¢ flat.`,'warn');
+  }
+  updateHold();if(holdMs>=ex.hold)completeStep(true);
+}
+
+function hearTarget(){
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  audioCtx.resume();const n=targetName(),osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+  osc.type='sine';osc.frequency.value=freqFromMidi(refMidiFor(n));
+  gain.gain.setValueAtTime(.0001,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.16,audioCtx.currentTime+.03);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.75);
+  osc.connect(gain).connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+.8);ignoreUntil=performance.now()+1050;
+}
+
+function clickOnce(accent=false){
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='square';o.frequency.value=accent?1200:850;
+  g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.045,audioCtx.currentTime+.005);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.045);
+  o.connect(g).connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.05);ignoreUntil=performance.now()+70;
+}
+function startClick(){
+  stopClick();const ex=currentExercise();if(ex.mode!=='form')return;
+  const ms=60000/effectiveBpm(ex);clickBeat=0;
+  clickOnce(true);
+  clickTimer=setInterval(()=>{clickBeat=(clickBeat+1)%(ex.beatsPerBar||4);clickOnce(clickBeat===0);},ms);
+}
+function stopClick(){if(clickTimer)clearInterval(clickTimer);clickTimer=null;}
+
+$('micBtn').onclick=startMic;$('hearBtn').onclick=hearTarget;$('startExBtn').onclick=startExercise;$('skipBtn').onclick=skipNote;
+$('tolerance').oninput=e=>{tolerance=+e.target.value;$('tolLabel').textContent=`±${tolerance}¢`};
+$('sensitivity').oninput=e=>{const v=+e.target.value;rmsThreshold=v/1000;$('sensLabel').textContent=v<10?'high':v<18?'normal':'low'};
+$('tempoFactor').oninput=e=>{tempoFactor=+e.target.value;$('tempoLabel').textContent=`${Math.round(tempoFactor*100)}%`;if(running&&currentExercise().mode==='form'){formStart=performance.now();if($('clickTrack').checked)startClick();}renderFormStatus();};
+$('clickTrack').onchange=e=>{if(running&&currentExercise().mode==='form'){if(e.target.checked)startClick();else stopClick();}};
+$('audioFile').onchange=e=>{const f=e.target.files[0];if(f){$('audio').src=URL.createObjectURL(f);$('audio').playbackRate=+$('speed').value;}};
+$('speed').oninput=e=>{$('speedVal').textContent=(+e.target.value).toFixed(2)+'×';$('audio').playbackRate=+e.target.value};
+window.addEventListener('beforeunload',()=>{stopClick();if(stream)stream.getTracks().forEach(t=>t.stop())});
+
+setupTuneControls();
+renderAll();
+})();
+</script>
+
+<script>
+(() => {
+  'use strict';
+
+  let deferredInstallPrompt = null;
+  const installPanel = document.getElementById('installPanel');
+  const installBtn = document.getElementById('installBtn');
+  const dismissBtn = document.getElementById('dismissInstallBtn');
+  const installModal = document.getElementById('installModal');
+  const closeModal = document.getElementById('closeInstallModal');
+  const modalBody = document.getElementById('installModalBody');
+  const title = document.getElementById('installTitle');
+  const text = document.getElementById('installText');
+
+  const isStandalone = () =>
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(ua);
+
+  function showPanel() {
+    if (isStandalone() || localStorage.getItem('saxCoachInstallDismissed') === '1') return;
+    installPanel.classList.add('show');
+
+    if (isIOS) {
+      title.textContent = 'Add Sax Coach to your iPhone';
+      text.textContent = 'Install from Safari to get a home-screen icon and standalone offline app.';
+      installBtn.textContent = 'Show iPhone steps';
+    } else if (isAndroid) {
+      title.textContent = 'Install Sax Coach';
+      text.textContent = 'Add it to your Android home screen and use it offline.';
+      installBtn.textContent = deferredInstallPrompt ? 'Install app' : 'How to install';
+    } else {
+      title.textContent = 'Install Sax Coach';
+      text.textContent = 'Your browser can install this as a standalone offline app.';
+      installBtn.textContent = deferredInstallPrompt ? 'Install app' : 'Install instructions';
+    }
+  }
+
+  function openInstructions() {
+    let body = '';
+    if (isIOS) {
+      body = `
+        <p>On iPhone/iPad, use <b>Safari</b> for the most reliable install flow.</p>
+        <ol class="install-steps">
+          <li>Open this page in Safari.</li>
+          <li>Tap the <b>Share</b> button.</li>
+          <li>Choose <b>Add to Home Screen</b>.</li>
+          <li>Turn on <b>Open as Web App</b> if Safari shows that option, then tap <b>Add</b>.</li>
+          <li>Launch <b>Sax Coach</b> from the new home-screen icon and allow microphone access.</li>
+        </ol>
+        <p>After it has loaded once while online, the core trainer is cached for offline use.</p>`;
+    } else if (isAndroid) {
+      body = `
+        <p>In Chrome or another PWA-capable Android browser:</p>
+        <ol class="install-steps">
+          <li>Open the browser menu (⋮).</li>
+          <li>Choose <b>Install app</b> or <b>Add to Home screen</b>.</li>
+          <li>Confirm the install.</li>
+          <li>Launch <b>Sax Coach</b> from the home-screen icon and allow microphone access.</li>
+        </ol>
+        <p>If the browser offers the install prompt directly, use the blue <b>Install app</b> button instead.</p>`;
+    } else {
+      body = `
+        <p>Use your browser's <b>Install app</b> command, usually found in the address bar or browser menu.</p>
+        <p>The app must be served from <b>HTTPS</b> (or localhost during development) for installation, offline caching, and microphone access to work reliably.</p>`;
+    }
+    modalBody.innerHTML = body;
+    installModal.classList.add('show');
+    installModal.setAttribute('aria-hidden', 'false');
+    closeModal.focus();
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if (!isStandalone()) {
+      localStorage.removeItem('saxCoachInstallDismissed');
+      showPanel();
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    installPanel.classList.remove('show');
+    localStorage.setItem('saxCoachInstalled', '1');
+  });
+
+  installBtn?.addEventListener('click', async () => {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      try { await deferredInstallPrompt.userChoice; } catch (_) {}
+      deferredInstallPrompt = null;
+      installPanel.classList.remove('show');
+    } else {
+      openInstructions();
+    }
+  });
+
+  dismissBtn?.addEventListener('click', () => {
+    installPanel.classList.remove('show');
+    localStorage.setItem('saxCoachInstallDismissed', '1');
+  });
+
+  closeModal?.addEventListener('click', () => {
+    installModal.classList.remove('show');
+    installModal.setAttribute('aria-hidden', 'true');
+    installBtn.focus();
+  });
+
+  installModal?.addEventListener('click', (e) => {
+    if (e.target === installModal) closeModal.click();
+  });
+
+  installModal.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal.click();
+    // The close button is the dialog's only interactive element.
+    if (e.key === 'Tab') { e.preventDefault(); closeModal.focus(); }
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sax/sw.js', { scope: '/sax/' }).catch((err) => {
+        console.warn('Service worker registration failed:', err);
+      });
+    });
+  }
+
+  if (!isStandalone()) {
+    if (isIOS || isAndroid) showPanel();
+    else setTimeout(showPanel, 900);
+  }
+})();
+</script>
+
+</body>
+</html>

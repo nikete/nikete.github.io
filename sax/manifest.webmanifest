@@ -1,0 +1,32 @@
+{
+  "name": "Coltrane Sax Coach",
+  "short_name": "Sax Coach",
+  "description": "Offline microphone-guided tenor sax trainer for Coltrane tunes.",
+  "id": "/sax/",
+  "start_url": "/sax/",
+  "scope": "/sax/",
+  "display": "standalone",
+  "background_color": "#0d0f14",
+  "theme_color": "#11131a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
