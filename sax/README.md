@@ -4,6 +4,12 @@ The original standalone trainer is published at https://www.nikete.com/sax/.
 It includes all nine tunes, microphone feedback, timed-form practice, fingering
 hints, a metronome, and progress saved in this browser on this device.
 
+The top of the page keeps the live tuner, exercise controls, score, and current
+fingering together. Scroll to **Before you play** for the complete note route
+or form map, all required fingerings and alternatives, reference tones,
+finger-change instructions, and mental rehearsal guidance for the selected
+exercise. Timed form and improvisation clocks continue through rests.
+
 ## Deployment
 
 GitHub Pages builds this repository's `master` branch. The existing Jekyll site

@@ -1,6 +1,6 @@
 // Bump this version whenever a cached asset changes.
 const CACHE_PREFIX = 'nikete-sax-';
-const CACHE_NAME = `${CACHE_PREFIX}v1`;
+const CACHE_NAME = `${CACHE_PREFIX}v2`;
 const SCOPE = new URL(self.registration.scope);
 const INDEX_URL = new URL('index.html', SCOPE).href;
 const CORE = [

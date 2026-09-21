@@ -36,11 +36,11 @@
   .meter{position:relative;height:34px;background:#0d1017;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0}.meter .center{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff7}.meter .safe{position:absolute;left:32%;right:32%;top:0;bottom:0;background:#54d69b16}.needle{position:absolute;top:4px;bottom:4px;width:4px;border-radius:3px;background:var(--accent);left:50%;transition:left .08s linear}.ticks{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
   .holdbar{height:10px;background:#0c0f15;border-radius:999px;overflow:hidden;border:1px solid var(--line)}.holdbar>div{height:100%;width:0;background:var(--good);transition:width .08s linear}
   button{border:1px solid var(--line);background:#202635;color:var(--text);padding:9px 12px;border-radius:10px;font-weight:650}button:hover{background:#293145}button.primary{background:#4964d7;border-color:#667ff0}button.good{background:#216746;border-color:#318d61}button.ghost{background:transparent}button:disabled{opacity:.45;cursor:not-allowed}
-  .exercise-list{display:grid;gap:7px;margin-top:10px}.ex{padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#11151d;cursor:pointer}.ex.active{border-color:#738cf0;background:#17203a}.ex.done:after{content:'✓';float:right;color:var(--good);font-weight:800}.ex b{display:block}.ex small{color:var(--muted)}
+  .exercise-list{display:grid;gap:7px;margin-top:10px}.ex{padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#11151d;cursor:pointer}.ex.active{border-color:#738cf0;background:#17203a}.ex.done:after{content:'✓';float:right;color:var(--good);font-weight:800}.ex{text-align:left;width:100%}.ex b{display:block}.ex small{color:var(--muted)}
   .sequence{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0}.step{min-width:34px;text-align:center;padding:6px 7px;background:#10141b;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-weight:700}.step.now{background:#314274;color:white;border-color:#7890f2}.step.ok{background:#183e30;color:#baf5db;border-color:#2a7757}
   .score{font-size:32px;font-weight:800}.score small{font-size:12px;color:var(--muted);font-weight:600}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.stat{padding:9px;background:#11151d;border:1px solid var(--line);border-radius:10px;text-align:center}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
   .finger-wrap{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;margin-top:9px}.sax{position:relative;width:90px;height:245px;margin:auto;background:linear-gradient(90deg,#6e5524,#d7ad4c,#7c5f27);border-radius:40px 40px 24px 24px;box-shadow:inset 8px 0 18px #0005,inset -8px 0 18px #fff2}.keys{position:absolute;left:17px;right:17px;top:42px;display:grid;grid-template-columns:1fr 1fr;gap:8px 11px}.key{width:24px;height:24px;border:2px solid #e7d7a1;border-radius:50%;background:#2227;display:grid;place-items:center;font-size:10px;color:#eee}.key.down{background:#f7d36a;color:#2d2208;box-shadow:0 0 10px #ffdd7655}.extras{margin-top:9px;display:flex;gap:5px;flex-wrap:wrap}.extra{font-size:11px;padding:4px 6px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}.extra.on{color:#ffe99a;border-color:#a98b33;background:#57461755}.finger-text b{font-size:18px}.hint{color:var(--muted);font-size:12px;margin-top:5px}.alts{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.alts button{padding:6px 8px;font-size:12px}
-  .audioBox{display:grid;gap:8px}.audioBox audio{width:100%}.range{display:flex;gap:9px;align-items:center}.range input{flex:1}.notice{padding:9px 10px;border:1px solid #725c2d;background:#3d331d;border-radius:9px;color:#ffe4a3;font-size:12px}
+  .audioBox{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.audioBox audio,.audioBox input[type=file]{width:100%;min-width:0}.range{display:flex;gap:9px;align-items:center}.range input{flex:1;min-width:0}.notice{padding:9px 10px;border:1px solid #725c2d;background:#3d331d;border-radius:9px;color:#ffe4a3;font-size:12px}
   details{margin-top:9px;border-top:1px solid var(--line);padding-top:9px}summary{cursor:pointer;color:#dbe2ff;font-weight:650}.settings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.settings label{display:grid;gap:5px;color:var(--muted);font-size:12px}.settings input{width:100%}
   .privacy{font-size:11px;color:var(--muted);margin-top:8px}.kbd{font-family:ui-monospace,monospace;background:#0d1118;border:1px solid var(--line);padding:1px 5px;border-radius:5px}
   .tune-panel{margin-bottom:12px}.tune-top{display:grid;grid-template-columns:minmax(180px,.7fr) 1.3fr;gap:12px;align-items:end}
@@ -64,67 +64,105 @@
   .install-steps{margin:12px 0;padding-left:22px}.install-steps li{margin:7px 0}
   @media(min-width:700px){.modal-backdrop{align-items:center}}
 
+
+  html{scroll-behavior:smooth;scroll-padding-top:16px}
+  a{color:#b6c5ff}select{max-width:100%;min-width:0}
+  .coach-controls{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px;margin-bottom:12px;padding:12px 15px}
+  .coach-controls label{display:grid;gap:4px;min-width:0}
+  .coach-controls select{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:#10141c;color:var(--text)}
+  .live-stage{min-height:calc(100svh - 154px);display:flex;flex-direction:column;gap:12px;padding-bottom:24px}
+  .live-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:12px;align-items:start}
+  .live-grid>*{min-width:0}.hero{grid-row:auto}
+  .readings{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+  .readings .detected{display:block;margin:0;padding-left:16px;border-left:1px solid var(--line)}
+  .readings .detected .details{font-size:12px}.readings .target{font-size:66px}
+  .live-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.live-actions button{flex:1;white-space:nowrap;font-size:13px;padding:9px}
+  .sequence{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.step{flex-shrink:0}
+  .prep-jump{display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding:4px 4px 0;font-size:13px}
+  .prep-jump span{color:var(--muted)}
+  .current-fingering .sax{height:150px;width:88px}.current-fingering .keys{top:22px}
+  .current-fingering .finger-wrap{grid-template-columns:90px minmax(0,1fr);gap:12px}
+  .preparation{padding:24px;margin-bottom:16px;border-top:3px solid var(--accent)}
+  .preparation h2{font-size:25px;line-height:1.2;margin:6px 0 8px}.preparation h3{font-size:18px;margin:0 0 10px}
+  .prep-heading{display:flex;justify-content:space-between;align-items:start;gap:16px}.prep-heading a{white-space:nowrap;font-size:13px}
+  .prep-intro{color:#d1d8e5;max-width:70ch;margin:0 0 14px}
+  .prep-metrics{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}.prep-metrics span{padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:#d5ddf2;background:#10141c;font-size:13px}
+  .prep-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:22px 0}
+  .prep-columns p,.prep-columns li{color:#c2cada;font-size:14px}.prep-columns ol{padding-left:22px;margin:0}.prep-columns li{padding-bottom:9px}
+  .prep-route{display:flex;gap:7px;flex-wrap:wrap;list-style:none;margin:12px 0;padding:0}
+  .prep-route a{display:flex;align-items:center;gap:7px;text-decoration:none;padding:8px 11px;background:#10141c;border:1px solid var(--line);border-radius:9px;font-weight:700}
+  .prep-route small{font-weight:400;font-size:11px;color:var(--muted)}
+  .prep-route a:hover,.prep-note:target{border-color:var(--accent)}
+  .prep-roadmap{display:grid;gap:8px;margin:12px 0;list-style:none;padding:0}
+  .prep-roadmap li{display:grid;grid-template-columns:95px 1fr;gap:12px;padding:13px;background:#10141c;border:1px solid var(--line);border-radius:10px}
+  .prep-roadmap .prep-route{margin:8px 0 0}.prep-roadmap .prep-route a{font-size:13px;padding:5px 8px}
+  .bar-range{color:#b6c5ff;font-size:12px;font-weight:700}.prep-roadmap p{margin:4px 0;color:var(--muted);font-size:13px}
+  .prep-moves{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;padding-left:22px;margin:12px 0 24px}
+  .prep-moves li{font-size:13px;color:#c2cada;padding-bottom:4px}.prep-moves b{color:var(--text)}
+  .prep-atlas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+  .prep-note{border:1px solid var(--line);border-radius:13px;background:#10141c;padding:16px;scroll-margin-top:16px;min-width:0}
+  .prep-note h4{font-size:30px;margin:0;line-height:1.1}.prep-note .note-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+  .prep-written{font-size:13px;color:#b6c5ff;margin:6px 0 12px}.prep-variant+.prep-variant{border-top:1px solid var(--line);margin-top:15px;padding-top:15px}
+  .prep-variant h5{font-size:14px;margin:0 0 9px}.prep-variant p{font-size:12px;color:#c2cada;line-height:1.55;margin:9px 0}
+  .hand-map{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:190px}
+  .hand{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.hand-label{grid-column:1/-1;font-size:10px;letter-spacing:.06em;color:var(--muted);text-align:center}
+  .finger-dot{display:grid;place-items:center;aspect-ratio:1;max-width:25px;width:100%;border:2px solid #71809a;border-radius:50%;font-size:11px;color:#bcc8dc;background:transparent}
+  .finger-dot.down{background:#f7d36a;color:#201b10;border-color:#f7d36a;font-weight:800}
+  .prep-extra{display:inline-block;font-size:11px;padding:4px 6px;border-radius:5px;margin:4px 4px 0 0;background:#29261b;color:#ffe69b;border:1px solid #65582b}
+  .prep-legend{font-size:13px;color:#c2cada;padding:12px;background:#1b2232;border-radius:10px;line-height:1.6}
+  .prep-legend strong{color:#ffe69b}.preparation footer{margin-top:20px;font-size:12px;color:var(--muted)}
+  .below-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.below-grid>*{min-width:0}.below-grid .tune-panel{margin:0;grid-column:1/-1}
+  @media(max-width:760px){
+    h1{font-size:21px}.sub{font-size:12px}.coach-controls{padding:10px;gap:8px}.coach-controls select{font-size:13px}
+    .live-grid{grid-template-columns:1fr;gap:10px}.live-stage{min-height:calc(100svh - 145px);padding-bottom:22px}
+    .live-exercise{display:none}.hero .stats .stat{display:flex;justify-content:center;align-items:center;gap:5px;padding:5px}.hero .stat b{font-size:15px}.hero .stat span{font-size:9px}.hero .sequence{margin:7px 0}.hero .meter{height:28px}.hero{padding:12px}.readings .target{font-size:56px}.written{font-size:12px}.feedback{font-size:13px;min-height:42px;margin:8px 0}.detected .note{font-size:34px}
+    .live-actions{display:grid;grid-template-columns:1fr 1fr;margin-top:9px;gap:6px}.live-actions button{padding:8px}.stats{margin-top:5px}.stat{padding:6px}
+    .current-fingering{padding:10px 12px}.current-fingering .sax{height:104px;width:74px}.current-fingering .keys{top:9px;left:9px;right:9px;gap:4px 8px}
+    .current-fingering .key{width:23px;height:23px}.current-fingering .finger-wrap{grid-template-columns:74px minmax(0,1fr);margin-top:6px}.current-fingering .finger-text .hint{display:none}
+    .current-fingering .extras,.current-fingering .alts{margin-top:5px}.current-fingering .finger-text b{font-size:15px}
+    .prep-jump{font-size:12px}.prep-jump span{display:none}.preparation{padding:17px 14px}.preparation h2{font-size:23px}.prep-heading{display:block}.prep-heading a{display:inline-block;margin:4px 0 12px}
+    .prep-atlas{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.prep-note{padding:12px}.prep-columns,.prep-moves,.below-grid{grid-template-columns:1fr}.prep-roadmap li{grid-template-columns:1fr;gap:5px}
+  }
+  @media(max-width:360px){.prep-atlas{grid-template-columns:1fr}.coach-controls{grid-template-columns:1fr}.readings{gap:8px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div><h1>Coltrane Sax Coach</h1><div class="sub">Offline tenor trainer. You think in <b>concert pitch</b>; written tenor notes stay secondary.</div></div>
+  <div><h1>Coltrane Sax Coach</h1><div class="sub">Concert pitch · B♭ tenor sax · offline practice</div></div>
   <div class="pill"><span id="micDot" class="dot"></span><span id="micStatus">Mic off</span></div>
 </header>
 
-<section id="installPanel" class="install-panel">
-  <div class="install-copy">
-    <b id="installTitle">Install Sax Coach</b>
-    <small id="installText">Save it to your home screen and use it offline like a local app.</small>
-  </div>
-  <div class="install-actions">
-    <button id="installBtn" class="primary">Install app</button>
-    <button id="dismissInstallBtn" class="ghost">Not now</button>
-  </div>
+<section class="panel coach-controls" aria-label="Choose your practice">
+  <label><span class="label">Tune</span><select id="tuneSelect" aria-label="Tune"></select></label>
+  <label><span class="label">Exercise</span><select id="exerciseSelect" aria-label="Exercise"></select></label>
 </section>
 
-
-<section class="panel tune-panel">
-  <div class="tune-top">
-    <div>
-      <div class="label">Tune</div>
-      <select id="tuneSelect"></select>
-    </div>
-    <div id="tuneInfo" class="tune-info"></div>
-  </div>
-  <div id="curriculum" class="curriculum"></div>
-  <div class="hint" style="margin-top:8px">These are ear/fingering/form exercises built around each tune, not a substitute for the recording or a full copyrighted melody transcription. Load your own recording below and learn the head by ear against this vocabulary.</div>
-</section>
-
-<div class="grid">
+<section id="liveCoach" class="live-stage" aria-label="Live coach">
+<div class="live-grid">
 <section class="panel hero">
-  <div class="row between">
-    <div><div class="label">Target · concert pitch</div><div id="targetNote" class="target">C</div><div id="writtenTarget" class="written">tenor fingering: written D</div></div>
-    <div class="row"><button id="hearBtn">▶ Hear target</button><button id="micBtn" class="primary">Start microphone</button></div>
+  <div class="readings">
+    <div><div id="targetLabel" class="label">Target · concert pitch</div><div id="targetNote" class="target">C</div><div id="writtenTarget" class="written">tenor fingering: written D</div></div>
+    <div class="detected"><div class="label">You are playing</div><div id="heardNote" class="note">—</div><div id="heardDetails" class="details">Play a note</div></div>
   </div>
-
-  <div class="detected"><div id="heardNote" class="note">—</div><div id="heardDetails" class="details">Play a note</div></div>
   <div class="meter"><div class="safe"></div><div class="center"></div><div id="needle" class="needle"></div></div>
   <div class="ticks"><span>−50¢ flat</span><span>center</span><span>+50¢ sharp</span></div>
   <div id="feedback" class="feedback">Start the microphone, then play the target note.</div>
-  <div class="label" style="margin:13px 0 5px">Hold / stability</div>
+  <div id="holdLabel" class="label" style="margin:8px 0 5px">Hold / stability</div>
   <div class="holdbar"><div id="holdFill"></div></div>
-
-  <div style="margin-top:17px" class="row between">
-    <div><div class="label">Current exercise</div><b id="exerciseName">1 · Five-note lock</b><div id="exerciseDesc" class="hint"></div></div>
-    <div class="row"><button id="startExBtn" class="good">Start / restart</button><button id="skipBtn" class="ghost">Skip note</button></div>
-  </div>
-  <div id="sequence" class="sequence"></div><div id="formStatus" class="formline" style="display:none"></div>
+  <div class="live-exercise" style="margin-top:10px"><div class="label">Current exercise</div><b id="exerciseName">1 · Five-note lock</b></div>
+  <div class="live-actions"><button id="micBtn" class="primary">Start microphone</button><button id="startExBtn" class="good">Start / restart</button><button id="hearBtn">▶ Hear target</button><button id="skipBtn" class="ghost">Skip note</button></div>
+  <div id="sequence" class="sequence" aria-label="Exercise progress"></div><div id="formStatus" class="formline" style="display:none"></div>
   <div class="stats">
     <div class="stat"><b id="sessionScore">—</b><span>exercise score</span></div>
     <div class="stat"><b id="pitchStat">—</b><span>avg pitch error</span></div>
     <div class="stat"><b id="bestStat">—</b><span>best score</span></div>
   </div>
 </section>
-
-<section class="panel">
-  <div class="label">Fingering · comfortable lower register</div>
+<section class="panel current-fingering">
+  <div class="label">Current fingering · tenor</div>
   <div class="finger-wrap">
     <div class="sax"><div class="keys">
       <div id="L1" class="key">L1</div><div id="R1" class="key">R1</div>
@@ -139,6 +177,42 @@
       <div class="hint" style="margin-top:10px">Filled circles = keys held down. L1/L2/L3 are left index/middle/ring; R1/R2/R3 are right index/middle/ring.</div>
     </div>
   </div>
+</section>
+</div>
+<div class="prep-jump"><a href="#exercisePrep">↓ Prepare this exercise · full fingerings</a><span>Read, hear, and finger it before you play.</span></div>
+</section>
+
+<section id="exercisePrep" class="panel preparation" aria-labelledby="prepTitle">
+  <div class="prep-heading"><div><div class="label">Before you play</div><h2 id="prepTitle">Prepare this exercise</h2></div><a href="#liveCoach">↑ Back to live coach</a></div>
+  <p id="exerciseDesc" class="prep-intro"></p>
+  <div id="prepMetrics" class="prep-metrics"></div>
+  <h3 id="prepRouteTitle">Your complete note route</h3>
+  <div id="prepRoute"></div>
+  <h3>Every fingering in this exercise</h3>
+  <div class="prep-legend"><strong>Filled gold circles = press. Open circles = release.</strong> LH = left hand; RH = right hand. 1 = index, 2 = middle, 3 = ring. Extra keys are named beneath each diagram. Keep your right thumb supporting the sax and your left thumb off the octave key for this register.</div>
+  <div id="prepAtlas" class="prep-atlas"></div>
+  <div class="prep-columns"><div><h3>Rehearse it in your mind</h3><ol id="prepRehearsal"></ol></div><div><h3>What the coach listens for</h3><p id="prepGrading"></p><p>The note check accepts any octave. The fingerings shown here use one comfortable lower register, with the octave key off.</p></div></div>
+  <div id="prepMovementBlock"><h3>Feel the changes</h3><p class="hint">Using the first fingering shown for each note. Move these fingers together; keep the other keys in place.</p><ol id="prepMoves" class="prep-moves"></ol></div>
+  <footer>Concert notes are the sounds you hear. Written notes name the corresponding B♭ tenor fingerings. These are practice exercises; use your recording to learn the tune’s melody and phrasing.</footer>
+</section>
+
+<section id="installPanel" class="install-panel">
+  <div class="install-copy">
+    <b id="installTitle">Install Sax Coach</b>
+    <small id="installText">Save it to your home screen and use it offline like a local app.</small>
+  </div>
+  <div class="install-actions">
+    <button id="installBtn" class="primary">Install app</button>
+    <button id="dismissInstallBtn" class="ghost">Not now</button>
+  </div>
+</section>
+<div class="below-grid">
+<section class="panel tune-panel">
+  <div class="tune-context">
+    <div id="tuneInfo" class="tune-info"></div>
+  </div>
+  <div id="curriculum" class="curriculum"></div>
+  <div class="hint" style="margin-top:8px">These are ear/fingering/form exercises built around each tune, not a substitute for the recording or a full copyrighted melody transcription. Load your own recording below and learn the head by ear against this vocabulary.</div>
 </section>
 
 <section class="panel">
@@ -333,7 +407,7 @@ const TUNES = {
         {label:'IV · D♭7',root:'Db',bars:1,allowed:MIXO('Db')},
         {label:'I · A♭7',root:'Ab',bars:2,allowed:MIXO('Ab')}
       ]},
-      {id:'improv',name:'6 · A♭ blues response',desc:'Stay simple enough that you can hear the form prompt changing underneath.',mode:'improv',duration:30000,allowed:Array.from(new Set([...BLUES('Ab'),'C']))}
+      {id:'improv',name:'6 · A♭ blues response',desc:'Use short A♭ blues phrases, leave space, and return to the home note.',mode:'improv',duration:30000,allowed:Array.from(new Set([...BLUES('Ab'),'C']))}
     ]
   },
   syeeda:{
@@ -373,7 +447,7 @@ const TUNES = {
         {label:'B♭ minor color',root:'Bb',bars:4,allowed:MINOR('Bb')},
         {label:'F minor color',root:'F',bars:4,allowed:MINOR('F')}
       ]},
-      {id:'improv',name:'6 · 30-second 3/4 response',desc:'Use very small F-minor cells; let the metronome establish the three-beat feel.',mode:'improv',duration:30000,allowed:MINOR('F')}
+      {id:'improv',name:'6 · 30-second 3/4 response',desc:'Use small F-minor cells and count a three-beat pulse yourself; this response has no metronome.',mode:'improv',duration:30000,allowed:MINOR('F')}
     ]
   },
   favorites:{
@@ -390,7 +464,7 @@ const TUNES = {
         {label:'E minor color',root:'E',bars:8,allowed:MINOR('E')},
         {label:'E major color',root:'E',bars:8,allowed:['E','F#','G#','A','B','C#','D#']}
       ]},
-      {id:'improv',name:'6 · E-minor response',desc:'First make the minor vamp effortless; then repeat the exercise using the major map.',mode:'improv',duration:30000,allowed:MINOR('E')}
+      {id:'improv',name:'6 · E-minor response',desc:'Make the E-minor note pool effortless. Practice the major color separately in the E major map exercise.',mode:'improv',duration:30000,allowed:MINOR('E')}
     ]
   }
 };
@@ -406,7 +480,7 @@ let tolerance=35, rmsThreshold=.013, tempoFactor=.75;
 let stepErrors=[], allErrors=[], wrongFrames=0, totalFrames=0;
 let improvStart=0, improvAllowed=0, improvDetected=0;
 let formStart=0, formAllowed=0, formDetected=0, lastFormSection=-1;
-let clickTimer=null, clickBeat=0;
+let clickTimer=null, clickBeat=0, exerciseTimer=null;
 let best = JSON.parse(localStorage.getItem('coltraneCoachBest') || '{}');
 let completed = JSON.parse(localStorage.getItem('coltraneCoachDone') || '{}');
 
@@ -476,14 +550,21 @@ function renderTuneInfo(){
   $('progressTitle').textContent=`Build ${tune().name}`;
 }
 
+function selectExercise(index){
+  stopClick();exIndex=index;resetExercise(false);renderAll();
+}
+
 function renderExercises(){
+  $('exerciseSelect').innerHTML='';
+  $('exerciseSelect').onchange=e=>selectExercise(Number(e.target.value));
   $('exerciseList').innerHTML='';
   EX().forEach((ex,i)=>{
     const done=completed[`${tuneId}:${ex.id}`];
-    const d=document.createElement('div');
+    const option=document.createElement('option');option.value=i;option.textContent=ex.name;option.selected=i===exIndex;$('exerciseSelect').appendChild(option);
+    const d=document.createElement('button');d.type='button';
     d.className='ex'+(i===exIndex?' active':'')+(done?' done':'');
     d.innerHTML=`<b>${ex.name}</b><small>${ex.desc}</small>`;
-    d.onclick=()=>{stopClick();exIndex=i;resetExercise(false);renderAll();};
+    d.onclick=()=>selectExercise(i);
     $('exerciseList').appendChild(d);
   });
   const n=EX().filter(x=>completed[`${tuneId}:${x.id}`]).length;
@@ -514,11 +595,16 @@ function renderSequence(){
 function renderTarget(){
   const n=targetName();
   $('targetNote').textContent=fmt(n);
+  const mode=currentExercise().mode;
+  $('targetLabel').textContent=mode==='form'?'Section root · concert':mode==='improv'?'Home note · concert':'Target · concert';
+  $('holdLabel').textContent=mode?'Exercise time':'Hold / stability';
+  $('hearBtn').textContent=mode==='form'?'▶ Hear root':mode==='improv'?'▶ Hear home note':'▶ Hear target';
+  $('skipBtn').hidden=!!mode;
   if(currentExercise().mode==='form'){
     const p=running?formPosition():null, sec=p?p.sec:currentExercise().sections[0];
-    $('writtenTarget').textContent=`form center: ${sec.label} · root ${fmt(n)} · tenor written ${fmt(writtenName(PC[n]))}`;
+    $('writtenTarget').textContent=`${sec.label} · tenor written ${fmt(writtenName(PC[n]))}`;
   } else {
-    $('writtenTarget').textContent=`tenor fingering: written ${fmt(writtenName(PC[n]))} · sounding target around ${fmtNote(refMidiFor(n))}`;
+    $('writtenTarget').textContent=`Tenor written ${fmt(writtenName(PC[n]))} · sounds ${fmtNote(refMidiFor(n))}`;
   }
   renderFingering();
 }
@@ -559,17 +645,85 @@ function renderFormStatus(){
   fs.innerHTML=`<b>Bar ${p.bar+1}/${p.totalBars}</b> · beat ${beat}/${ex.beatsPerBar||4} · ${p.sec.label} · section bar ${p.barInSection+1}/${p.sec.bars}`;
 }
 
+// Preparation uses the same exercise and fingering data as the live coach.
+function preparationNotes(ex){
+  const pool=ex.mode==='form'?ex.sections.flatMap(s=>s.allowed):ex.mode==='improv'?ex.allowed:ex.notes;
+  return pool.filter((note,index)=>pool.findIndex(other=>PC[other]===PC[note])===index);
+}
+function prepNoteLink(note,index){
+  return `<li><a href="#prep-note-${PC[note]}">${index==null?'':`<small>${index+1}</small>`}${fmt(note)}</a></li>`;
+}
+function fingerMove(from,to){
+  const a=FINGERINGS[(PC[from]+2)%12][0], b=FINGERINGS[(PC[to]+2)%12][0];
+  const release=[],press=[];
+  [['left','L'],['right','R']].forEach(([hand,label])=>{
+    a[hand].forEach((held,i)=>{if(held&&!b[hand][i])release.push(label+(i+1));if(!held&&b[hand][i])press.push(label+(i+1));});
+  });
+  a.extras.forEach(key=>{if(!b.extras.includes(key))release.push(key);});
+  b.extras.forEach(key=>{if(!a.extras.includes(key))press.push(key);});
+  return [release.length?`Release ${release.join(', ')}`:'',press.length?`press ${press.join(', ')}`:''].filter(Boolean).join('; ') || 'Keep the same fingering; repeat the note';
+}
+function prepVariantDiagram(v){
+  return `<div class="hand-map" aria-hidden="true">${[['left','LH'],['right','RH']].map(([hand,label])=>`<div class="hand"><span class="hand-label">${label}</span>${v[hand].map((down,i)=>`<span class="finger-dot${down?' down':''}">${i+1}</span>`).join('')}</div>`).join('')}</div>`;
+}
+function prepHandText(v){
+  return [['left','LH'],['right','RH']].map(([hand,label])=>{
+    const held=v[hand].map((down,i)=>down?i+1:null).filter(Boolean);
+    return `${label}: ${held.length?held.join('–')+' down':'all open'}`;
+  }).join(' · ');
+}
+function renderPreparation(){
+  const ex=currentExercise(), notes=preparationNotes(ex), mode=ex.mode||'sequence';
+  $('prepTitle').textContent=`${tune().name} · ${ex.name.replace(/^\d+\s*·\s*/, '')}`;
+  let metrics=[], rehearsal=[], grading='';
+  if(mode==='sequence'){
+    metrics=[`${ex.notes.length} steps · ${notes.length} fingerings`,`Hold ${(ex.hold/1000).toFixed(2).replace(/0$/,'')} s per target`,`Tuning window ±${tolerance}¢`];
+    $('prepRouteTitle').textContent='Your complete note route';
+    $('prepRoute').innerHTML=`<ol class="prep-route">${ex.notes.map(prepNoteLink).join('')}</ol>`;
+    rehearsal=[`Listen to ${fmt(ex.notes[0])} with “Hear target.” Sing the route slowly, saying the concert note names.`, 'Without blowing, finger the whole route. Notice which keys move together; use the change list below.', 'Start the microphone, then start the exercise. Keep the air steady and hold each note until the coach advances. Breathe between targets when you need to.'];
+    grading=`The hold bar fills while the target note is within ±${tolerance} cents. It falls back when the note drifts or you pause. The score uses pitch centering and correct-note detection; this drill does not judge rhythm or articulation. “Skip note” moves on without a graded hold.`;
+  }else if(mode==='form'){
+    const beats=ex.beatsPerBar||4, bpm=effectiveBpm(ex);
+    metrics=[`${formTotalBars(ex)} bars · ${beats}/4`,`${bpm.toFixed(1).replace(/\.0$/,'')} BPM · ${Math.round(formDuration(ex)/1000)} s`,`${notes.length} fingerings across the form`];
+    $('prepRouteTitle').textContent='Know the whole form before you start';
+    let bar=1;
+    $('prepRoute').innerHTML=`<ol class="prep-roadmap">${ex.sections.map(sec=>{
+      const start=bar;bar+=sec.bars;
+      return `<li><div class="bar-range">${sec.bars===1?'BAR '+start:'BARS '+start+'–'+(bar-1)}</div><div><b>${sec.label}</b><p>${sec.bars} ${sec.bars===1?'bar':'bars'} · land on ${fmt(sec.root)} to hear the center</p><ul class="prep-route">${sec.allowed.map(n=>prepNoteLink(n)).join('')}</ul></div></li>`;
+    }).join('')}</ol>`;
+    rehearsal=[`Say the section roots in order: ${ex.sections.map(s=>fmt(s.root)).join(' → ')}. Picture the fingering for each arrival.`, `Count ${Array.from({length:beats},(_,i)=>i+1).join('–')} in every bar, including rests. Look ahead to the next section’s note pool.`, 'Start with just the section roots. Add short phrases once you can keep your place. Set the tempo and metronome below before starting.'];
+    grading='The clock moves through the form. The microphone checks whether detected notes fit the current section’s displayed pool and how centered they are. The large note is the section root, not the only allowed note. Rhythm, note attacks and phrase quality are not graded; keep counting through rests.';
+  }else{
+    metrics=[`${ex.duration/1000} s response`,`${notes.length} notes in your pool`,`Home note ${fmt(tune().home)}`];
+    $('prepRouteTitle').textContent='Your note pool · choose your own order';
+    $('prepRoute').innerHTML=`<ul class="prep-route">${ex.allowed.map(n=>prepNoteLink(n)).join('')}</ul>`;
+    rehearsal=[`Hear ${fmt(tune().home)} as home. Sing a short two- or three-note idea from this pool.`, 'Finger that idea silently, then imagine an answer. Repeat something familiar before changing it.', 'Leave breathing room between phrases and return to the home note. This mode has a fixed note pool; it does not run a chord sequence or metronome.'];
+    grading='The microphone checks membership in this note pool and pitch centering. The large home note is an anchor, not a note you must hold throughout. Rests are fine. The score does not measure rhythm, phrasing or the quality of your musical ideas.';
+  }
+  $('prepMetrics').innerHTML=metrics.map(text=>`<span>${text}</span>`).join('');
+  $('prepRehearsal').innerHTML=rehearsal.map(text=>`<li>${text}</li>`).join('');
+  $('prepGrading').textContent=grading;
+  $('prepMovementBlock').hidden=mode!=='sequence';
+  $('prepMoves').innerHTML=mode==='sequence'?ex.notes.slice(1).map((note,i)=>`<li><b>${fmt(ex.notes[i])} → ${fmt(note)}</b><br>${fingerMove(ex.notes[i],note)}.</li>`).join(''):'';
+  const writtenSpellings=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+  $('prepAtlas').innerHTML=notes.map(note=>{
+    const wpc=(PC[note]+2)%12, octave=Math.floor((refMidiFor(note)+14)/12)-1;
+    return `<article id="prep-note-${PC[note]}" class="prep-note"><div class="note-label">Concert pitch</div><h4>${fmt(note)}</h4><div class="prep-written">Tenor written ${fmt(writtenSpellings[wpc])}${octave} · sounds ${fmt(note)}3</div>${FINGERINGS[wpc].map((v,i)=>`<section class="prep-variant"><h5>${i?'Alternative: ':''}${v.label}</h5>${prepVariantDiagram(v)}<p>${prepHandText(v)}</p><span class="prep-extra">Octave key OFF</span>${v.extras.map(key=>`<span class="prep-extra">${key}</span>`).join('')}<p>${v.desc}</p></section>`).join('')}<button class="ghost prep-hear" data-note="${note}" type="button" aria-label="Hear concert ${fmt(note)}">▶ Hear ${fmt(note)}</button></article>`;
+  }).join('');
+  $('prepAtlas').querySelectorAll('.prep-hear').forEach(button=>button.onclick=()=>playReference(button.dataset.note));
+}
+
 function renderAll(){
   renderTuneInfo();
   $('exerciseName').textContent=currentExercise().name;
   $('exerciseDesc').textContent=currentExercise().desc;
   const b=best[progressKey()];
   $('bestStat').textContent=b ? Math.round(b) : '—';
-  renderTarget(); renderSequence(); renderExercises(); renderCurriculum(); renderFormStatus(); updateHold();
+  renderTarget(); renderSequence(); renderExercises(); renderCurriculum(); renderFormStatus(); updateHold(); renderPreparation();
 }
 
 function resetExercise(start=false){
-  stopClick();
+  stopClick();stopExerciseClock();
   stepIndex=0;holdMs=0;variantIndex=0;running=start;stepErrors=[];allErrors=[];wrongFrames=0;totalFrames=0;
   improvStart = start && currentExercise().mode==='improv' ? performance.now() : 0;
   improvAllowed=0;improvDetected=0;formAllowed=0;formDetected=0;lastFormSection=-1;
@@ -585,7 +739,25 @@ function resetExercise(start=false){
 function startExercise(){
   resetExercise(true);lastTick=performance.now();
   if(currentExercise().mode==='form' && $('clickTrack').checked) startClick();
+  if(currentExercise().mode)exerciseTimer=setInterval(updateExerciseClock,80);
   renderAll();
+}
+function stopExerciseClock(){
+  if(exerciseTimer!==null)clearInterval(exerciseTimer);
+  exerciseTimer=null;
+}
+function updateExerciseClock(){
+  if(!running)return;
+  const ex=currentExercise();
+  if(ex.mode==='form'){
+    const p=formPosition(ex);
+    if(p.idx!==lastFormSection){lastFormSection=p.idx;variantIndex=0;renderTarget();renderSequence();}
+    renderFormStatus();updateHold();
+    if(p.elapsed>=formDuration(ex))finishExercise();
+  }else if(ex.mode==='improv'){
+    updateHold();
+    if(performance.now()-improvStart>=ex.duration)finishExercise();
+  }
 }
 function skipNote(){const ex=currentExercise();if(ex.mode==='improv'||ex.mode==='form')return;completeStep(false);}
 
@@ -617,7 +789,7 @@ function scoreNow(){
 }
 
 function finishExercise(){
-  stopClick();running=false;const ex=currentExercise(),score=scoreNow();
+  stopClick();stopExerciseClock();running=false;const ex=currentExercise(),score=scoreNow();
   $('sessionScore').textContent=score;
   const mean=allErrors.length?allErrors.reduce((a,b)=>a+Math.abs(b),0)/allErrors.length:null;
   $('pitchStat').textContent=mean==null?'—':`${Math.round(mean)}¢`;
@@ -684,12 +856,6 @@ function detectPitch(){
   analyser.getFloatTimeDomainData(timeBuf);
   const est=estimatePitch(timeBuf,audioCtx.sampleRate),now=performance.now(),dt=Math.min(130,now-(lastTick||now));lastTick=now;
 
-  if(running&&currentExercise().mode==='form'){
-    const p=formPosition();
-    if(p.idx!==lastFormSection){lastFormSection=p.idx;variantIndex=0;renderTarget();renderSequence();}
-    renderFormStatus();updateHold();
-    if(p.elapsed>=formDuration(currentExercise())){finishExercise();return;}
-  }
 
   if(!est){
     recentMidi=[];$('heardNote').textContent='—';$('heardDetails').textContent='listening…';
@@ -762,9 +928,10 @@ function gradeFrame(m,dt){
   updateHold();if(holdMs>=ex.hold)completeStep(true);
 }
 
-function hearTarget(){
+function hearTarget(){playReference(targetName());}
+function playReference(n){
   if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  audioCtx.resume();const n=targetName(),osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+  audioCtx.resume();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
   osc.type='sine';osc.frequency.value=freqFromMidi(refMidiFor(n));
   gain.gain.setValueAtTime(.0001,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.16,audioCtx.currentTime+.03);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+.75);
   osc.connect(gain).connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+.8);ignoreUntil=performance.now()+1050;
@@ -785,13 +952,13 @@ function startClick(){
 function stopClick(){if(clickTimer)clearInterval(clickTimer);clickTimer=null;}
 
 $('micBtn').onclick=startMic;$('hearBtn').onclick=hearTarget;$('startExBtn').onclick=startExercise;$('skipBtn').onclick=skipNote;
-$('tolerance').oninput=e=>{tolerance=+e.target.value;$('tolLabel').textContent=`±${tolerance}¢`};
+$('tolerance').oninput=e=>{tolerance=+e.target.value;$('tolLabel').textContent=`±${tolerance}¢`;renderPreparation()};
 $('sensitivity').oninput=e=>{const v=+e.target.value;rmsThreshold=v/1000;$('sensLabel').textContent=v<10?'high':v<18?'normal':'low'};
-$('tempoFactor').oninput=e=>{tempoFactor=+e.target.value;$('tempoLabel').textContent=`${Math.round(tempoFactor*100)}%`;if(running&&currentExercise().mode==='form'){formStart=performance.now();if($('clickTrack').checked)startClick();}renderFormStatus();};
+$('tempoFactor').oninput=e=>{tempoFactor=+e.target.value;$('tempoLabel').textContent=`${Math.round(tempoFactor*100)}%`;if(running&&currentExercise().mode==='form'){formStart=performance.now();if($('clickTrack').checked)startClick();}renderFormStatus();renderPreparation();};
 $('clickTrack').onchange=e=>{if(running&&currentExercise().mode==='form'){if(e.target.checked)startClick();else stopClick();}};
 $('audioFile').onchange=e=>{const f=e.target.files[0];if(f){$('audio').src=URL.createObjectURL(f);$('audio').playbackRate=+$('speed').value;}};
 $('speed').oninput=e=>{$('speedVal').textContent=(+e.target.value).toFixed(2)+'×';$('audio').playbackRate=+e.target.value};
-window.addEventListener('beforeunload',()=>{stopClick();if(stream)stream.getTracks().forEach(t=>t.stop())});
+window.addEventListener('beforeunload',()=>{stopClick();stopExerciseClock();if(stream)stream.getTracks().forEach(t=>t.stop())});
 
 setupTuneControls();
 renderAll();
